@@ -1,0 +1,39 @@
+.widget-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.header {
+	text-align: center;
+}
+
+.video-container {
+	flex-grow: 1; 
+	background: black;
+}
+
+.button-container {	
+	display: flex; 
+	align-items: center;	
+	justify-content: center; 
+	padding: 32px;
+}
+
+.button-wrapper {
+	flex-grow: 1;
+	display: flex;
+	align-items: center; 
+	justify-content: center;
+}
+
+.button-wrapper button {
+	padding: 8px;
+}
+
+.button-wrapper i {
+	vertical-align: middle;
+}
+
+.button-wrapper span {
+	margin-left: 4px;
+}

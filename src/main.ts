@@ -29,7 +29,7 @@ class Template extends utils.Adapter {
 	public constructor(options: Partial<ioBroker.AdapterOptions> = {}) {
 		super({
 			...options,
-			name: "template",
+			name: "asteriskadapter",
 		});
 		this.on("ready", this.onReady.bind(this));
 		this.on("objectChange", this.onObjectChange.bind(this));

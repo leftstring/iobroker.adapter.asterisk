@@ -1,45 +1,17 @@
 {
 	"common": {
-		"name": "template",
+		"name": "asteriskadapter",
 		"version": "0.0.1",
 		"news": {
 			"0.0.1": {
 				"en": "initial release",
-				"de": "Erstveröffentlichung",
-				"ru": "Начальная версия",
-				"pt": "lançamento inicial",
-				"nl": "Eerste uitgave",
-				"fr": "Première version",
-				"it": "Versione iniziale",
-				"es": "Versión inicial",
-				"pl": "Pierwsze wydanie",
-				"zh-cn": "首次出版"
+				"de": "Erstveröffentlichung"
 			}
 		},
-		"title": "Template (TypeScript with VIS)",
-		"titleLang": {
-			"en": "Template (TypeScript with VIS)",
-			"de": "Vorlage (TypeScript mit VIS)",
-			"ru": "Шаблон (TypeScript с VIS)",
-			"pt": "Modelo (TypeScript com VIS)",
-			"nl": "Sjabloon (TypeScript met VIS)",
-			"fr": "Modèle (TypeScript avec VIS)",
-			"it": "Modello (TypeScript con VIS)",
-			"es": "Plantilla (TypeScript con VIS)",
-			"pl": "Szablon (TypeScript z VIS)",
-			"zh-cn": "模板（带有VIS的TypeScript）"
-		},
+		"title": "Asterisk Adapter",
 		"desc": {
-			"en": "Template for adapter development",
-			"de": "Vorlage für die Adapterentwicklung",
-			"ru": "Шаблон для разработки адаптера",
-			"pt": "Modelo para desenvolvimento de adaptadores",
-			"nl": "Sjabloon voor adapterontwikkeling",
-			"fr": "Modèle pour le développement de l'adaptateur",
-			"it": "Modello per lo sviluppo dell'adattatore",
-			"es": "Plantilla para desarrollo de adaptadores",
-			"pl": "Szablon do opracowania adaptera",
-			"zh-cn": "适配器开发的模板"
+			"en": "Asterisk Adapter",
+			"de": "Asterisk Adapter"
 		},
 		"authors": [
 			"Author <author@mail.com>"
@@ -70,16 +42,8 @@
 		"adminTab": {
 			"singleton": true,
 			"name": {
-				"en": "Template (TypeScript with VIS)",
-				"de": "Vorlage (TypeScript mit VIS)",
-				"ru": "Шаблон (TypeScript с VIS)",
-				"pt": "Modelo (TypeScript com VIS)",
-				"nl": "Sjabloon (TypeScript met VIS)",
-				"fr": "Modèle (TypeScript avec VIS)",
-				"it": "Modello (TypeScript con VIS)",
-				"es": "Plantilla (TypeScript con VIS)",
-				"pl": "Szablon (TypeScript z VIS)",
-				"zh-cn": "模板（带有VIS的TypeScript）"
+				"en": "Asterisk Adapter",
+				"de": "Asterisk Adapter"
 			},
 			"link": "",
 			"fa-icon": "info"

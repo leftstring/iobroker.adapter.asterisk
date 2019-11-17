@@ -1,14 +1,9 @@
-<!--
-	ioBroker.vis template Widget-Set
-
-	version: "0.0.1"
-
-	Copyright 2019 Author author@mail.com
--->
 <!-- here you can include so many css as you want -->
-<link rel="stylesheet" href="widgets/template/css/style.css" />
+<link rel="stylesheet" href="widgets/asteriskadapter/css/style.css" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 <!-- here you can include so many js-files as you want -->
-<script type="text/javascript" src="widgets/template/js/template.js"></script>
+<script type="text/javascript" src="widgets/asteriskadapter/js/asteriskadapter.js"></script>
 
 <!-- the full description of format in data-vis-attrs can be found here:
 	https://github.com/ioBroker/ioBroker.vis/blob/master/www/js/visEditInspect.js#L39
@@ -97,39 +92,38 @@
 		<%== %> - place unescaped result to HTML document
 
 	You can do "if" conditions and "for" cycles.
-
 -->
-<script id="tplTemplateShowInstance"
+
+<script id="tplAsteriskadapterDoorbird"
 		type="text/ejs"
 		class="vis-tpl"
-		data-vis-prev='<div id="prev_tplMysetShowInstance" style="position: relative; text-align: initial;padding: 4px "><div class="vis-widget_prev " style="width: 280px; height: 159px;" > <div class="myset-class vis-widget-prev-body " style="padding:2px"> OID: hm-rpc.0.EEQ0006629.1.STATE<br> OID value: true<br> Color: <span style="color: rgb(128, 0, 0);">#800000</span><br> htmlText: <textarea readonly="" style="width:100%">asda</textarea></div>'
+		data-vis-prev='Doorbird Widget'
 		data-vis-attrs="oid/id;myColor/color;htmlText/text;"
 		data-vis-attrs0="group.extraTemplate;extraAttr"
-		data-vis-set="template"
+		data-vis-set="asteriskadapter"
 		data-vis-type="helper"
-		data-vis-name="Show instance">
-	<div class="vis-widget <%== this.data.attr('class') %>" style="width:230px; height:210px;" id="<%= this.data.attr('wid') %>" >
-		<div class="template-class vis-widget-body <%== this.data.attr('class') %>" style="padding:2px" >
-			OID: <%= this.data.attr('oid') %><br>
-			OID value: <%== vis.states[this.data.attr('oid') + '.val'] %><br>
-			Color: <span style="color: <%= this.data.attr('myColor') %>"><%= this.data.attr('myColor') %></span><br>
-			extraAttr: <%== this.data.attr('extraAttr') %><br>
-			Browser instance: <%= vis.instance %><br>
-			htmlText: <textarea readonly style="width: calc(100% - 10px)"><%== this.data.attr('htmlText') %></textarea><br>
+		data-vis-name="Doorbird">
+	<div class="vis-widget <%== this.data.attr('class') %>" style="width:200px; height:200px;" id="<%= this.data.attr('wid') %>" >
+		<div class="widget-container vis-widget-body <%== this.data.attr('class') %>">
+			<h1 class="header">Türklingel</h1>			
+			<div class="video-container">
+				<video></video>
+				<audio></audio>
+			</div>
+			<div class="button-container">
+				<div class="button-wrapper">
+					<button style="padding: 8px;">
+						<i class="material-icons">call</i>
+						<span>Antworten</span>
+					</button>
+				</div>
+				<div class="button-wrapper">			
+					<button>
+						<i class="material-icons">lock_open</i>
+						<span>Tür öffnen</span>
+					</button>
+				</div>
+			</div>
 		</div>
 	</div>
-</script>
-
-<script id="tplTemplateHelper"
-		type="text/ejs"
-		class="vis-tpl"
-		data-vis-prev='<div id="prev_tplTemplateHelper" style="position: relative; text-align: initial;padding: 4px "><div class="vis-widget_prev " style="width: 280px; height: 159px;" > <div class="myset-class vis-widget-prev-body " style="padding:2px"> OID: hm-rpc.0.EEQ0006629.1.STATE<br> OID value: true<br> Color: <span style="color: rgb(128, 0, 0);">#800000</span><br> htmlText: <textarea readonly="" style="width:100%">asda</textarea></div>'
-		data-vis-attrs="oid/id;myColor/color;htmlText/text;"
-		data-vis-attrs0="group.extraTemplate;extraAttr"
-		data-vis-set="template"
-		data-vis-type="helper"
-		data-vis-name="Helper">
-	<div class="vis-widget <%== this.data.attr('class') %>" style="overflow:visible; width: 230px; height: 210px" id="<%= this.data.attr('wid') %>"><%
-		vis.binds.template.createWidget(this.data.wid, this.view, this.data, this.style);
-	%></div>
 </script>
