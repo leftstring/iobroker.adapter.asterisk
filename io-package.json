@@ -1,6 +1,6 @@
 {
 	"common": {
-		"name": "asteriskadapter",
+		"name": "doorbird",
 		"version": "0.0.1",
 		"news": {
 			"0.0.1": {
@@ -8,10 +8,10 @@
 				"de": "Erstveröffentlichung"
 			}
 		},
-		"title": "Asterisk Adapter",
+		"title": "Doorbird Adapter",
 		"desc": {
-			"en": "Asterisk Adapter",
-			"de": "Asterisk Adapter"
+			"en": "Doorbird Adapter",
+			"de": "Doorbird Adapter"
 		},
 		"authors": [
 			"Author <author@mail.com>"
@@ -25,9 +25,8 @@
 		"license": "MIT",
 		"platform": "Javascript/Node.js",
 		"main": "build/main.js",
-		"icon": "template.png",
+		"icon": "icon.png",
 		"enabled": true,
-		"extIcon": "https://raw.githubusercontent.com/Author/ioBroker.template/master/admin/template.png",
 		"readme": "https://github.com/Author/ioBroker.template/blob/master/README.md",
 		"loglevel": "info",
 		"restartAdapters": [
@@ -42,8 +41,8 @@
 		"adminTab": {
 			"singleton": true,
 			"name": {
-				"en": "Asterisk Adapter",
-				"de": "Asterisk Adapter"
+				"en": "Doorbird Adapter",
+				"de": "Doorbird Adapter"
 			},
 			"link": "",
 			"fa-icon": "info"

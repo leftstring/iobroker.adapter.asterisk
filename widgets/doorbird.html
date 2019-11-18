@@ -1,9 +1,9 @@
 <!-- here you can include so many css as you want -->
-<link rel="stylesheet" href="widgets/asteriskadapter/css/style.css" />
+<link rel="stylesheet" href="widgets/doorbird/css/style.css" />
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <!-- here you can include so many js-files as you want -->
-<script type="text/javascript" src="widgets/asteriskadapter/js/asteriskadapter.js"></script>
+<script type="text/javascript" src="widgets/doorbird/js/doorbird.js"></script>
 
 <!-- the full description of format in data-vis-attrs can be found here:
 	https://github.com/ioBroker/ioBroker.vis/blob/master/www/js/visEditInspect.js#L39
@@ -94,13 +94,13 @@
 	You can do "if" conditions and "for" cycles.
 -->
 
-<script id="tplAsteriskadapterDoorbird"
+<script id="tpldoorbirdWidget"
 		type="text/ejs"
 		class="vis-tpl"
 		data-vis-prev='Doorbird Widget'
 		data-vis-attrs="oid/id;myColor/color;htmlText/text;"
 		data-vis-attrs0="group.extraTemplate;extraAttr"
-		data-vis-set="asteriskadapter"
+		data-vis-set="doorbird"
 		data-vis-type="helper"
 		data-vis-name="Doorbird">
 	<div class="vis-widget <%== this.data.attr('class') %>" style="width:200px; height:200px;" id="<%= this.data.attr('wid') %>" >
