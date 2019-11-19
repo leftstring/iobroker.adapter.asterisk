@@ -12,6 +12,13 @@
 	background: black;
 }
 
+.preview-img {
+	display: block;
+    margin-left: auto;
+	margin-right: auto;
+	height: 100%;
+}
+
 .button-container {	
 	display: flex; 
 	align-items: center;	
