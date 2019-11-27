@@ -93,16 +93,31 @@
 
 	You can do "if" conditions and "for" cycles.
 -->
+<!-- 
+<!- Dieses Script wird von Socket.io automatisch zu Verfügung gestellt ->
+<script src="/socket.io/socket.io.js"></script>
+ 
+<script>
+  	// Mit dem Socket.io-Server verbinden
+  	var socket = io.connect('http://localhost:8083');
+
+  	// Warten auf Nachrichten
+	socket.on('welcome', function (data) {
+	console.log('[socket.io] "welcome"-Event vom Server empfangen:\n' + data);
+
+	// Eigenen Event vom Client an den Server schicken
+	socket.emit('user agent', navigator.userAgent);
+  });
+</script> -->
 
 <script id="tpldoorbirdWidget"
 		type="text/ejs"
 		class="vis-tpl"
-		data-vis-prev='Doorbird Widget'
-		data-vis-attrs="oid/id;myColor/color;htmlText/text;"
-		data-vis-attrs0="group.extraTemplate;extraAttr"
-		data-vis-set="doorbird"
-		data-vis-type="helper"
-		data-vis-name="Doorbird">
+		data-vis-prev=''
+		data-vis-set="doorbird"		
+		data-vis-type="widget"
+		data-vis-name="Doorbird"
+		data-vis-attrs="adapterInstance/id;">
 	<div class="vis-widget <%== this.data.attr('class') %>" style="width:200px; height:200px;" id="<%= this.data.attr('wid') %>" >
 		<div class="widget-container vis-widget-body <%== this.data.attr('class') %>">
 			<h1 class="header">Türklingel</h1>			
@@ -113,13 +128,13 @@
 			</div>
 			<div class="button-container">
 				<div class="button-wrapper">
-					<button style="padding: 8px;">
+					<button>
 						<i class="material-icons">call</i>
 						<span>Antworten</span>
 					</button>
 				</div>
 				<div class="button-wrapper">			
-					<button>
+					<button onclick="openDoor()">
 						<i class="material-icons">lock_open</i>
 						<span>Tür öffnen</span>
 					</button>

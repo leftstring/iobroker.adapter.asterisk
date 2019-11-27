@@ -6,6 +6,8 @@
 // you need to create an adapter
 import * as utils from "@iobroker/adapter-core";
 
+import http = require("http");
+
 // Load your modules here, e.g.:
 // import * as fs from "fs";
 
@@ -15,16 +17,14 @@ declare global {
 	// eslint-disable-next-line @typescript-eslint/no-namespace
 	namespace ioBroker {
 		interface AdapterConfig {
-			// Define the shape of your options here (recommended)
-			option1: boolean;
-			option2: string;
-			// Or use a catch-all approach
-			[key: string]: any;
+			ipAddress: string;
+			username: string;
+			password: string;
 		}
 	}
 }
 
-class Template extends utils.Adapter {
+class DoorbirdAdapter extends utils.Adapter {
 
 	public constructor(options: Partial<ioBroker.AdapterOptions> = {}) {
 		super({
@@ -34,7 +34,6 @@ class Template extends utils.Adapter {
 		this.on("ready", this.onReady.bind(this));
 		this.on("objectChange", this.onObjectChange.bind(this));
 		this.on("stateChange", this.onStateChange.bind(this));
-		// this.on("message", this.onMessage.bind(this));
 		this.on("unload", this.onUnload.bind(this));
 	}
 
@@ -42,12 +41,35 @@ class Template extends utils.Adapter {
 	 * Is called when databases are connected and adapter received configuration.
 	 */
 	private async onReady(): Promise<void> {
+		// var io = socketio.listen(8083, { handlePreflightRequest: (req, res) => {
+		// 	const headers = {
+		// 		"Access-Control-Allow-Headers": "Content-Type, Authorization",
+		// 		"Access-Control-Allow-Origin": req.headers.origin,
+		// 		"Access-Control-Allow-Credentials": true
+		// 	};
+		// 	res.writeHead(200, headers);
+		// 	res.end();
+		// } });
+
+		// // Socket.io-Events
+		// io.sockets.on('connection', function (socket: SocketIO.Server) {
+		// 	console.log('[socket.io] Ein neuer Client (Browser) hat sich verbunden.\n');
+		
+		//  	console.log('[socket.io] SENDE "welcome"-Event an den Client.\n');
+		//  	socket.emit('welcome', "Hello world");
+		
+		//  	socket.on('user agent', function (data: any) {
+		//  	console.log('[socket.io] EMPFANGE "user agent"-Event vom Client:');
+		// 	console.log(data, '\n');
+		// 	});
+		// });
+		
 		// Initialize your adapter here
 
 		// The adapters config (in the instance object everything under the attribute "native") is accessible via
 		// this.config:
-		this.log.info("config option1: " + this.config.option1);
-		this.log.info("config option2: " + this.config.option2);
+		//this.log.info("config option1: " + this.config.option1);
+		//this.log.info("config option2: " + this.config.option2);
 
 		/*
 		For every state in the system there has to be also an object of type state
@@ -59,6 +81,18 @@ class Template extends utils.Adapter {
 			common: {
 				name: "testVariable",
 				type: "boolean",
+				role: "indicator",
+				read: true,
+				write: true,
+			},
+			native: {},
+		});
+
+		await this.setObjectAsync("image", {
+			type: "state",
+			common: {
+				name: "image",
+				type: "string",
 				role: "indicator",
 				read: true,
 				write: true,
@@ -83,6 +117,17 @@ class Template extends utils.Adapter {
 		// same thing, but the state is deleted after 30s (getState will return null afterwards)
 		await this.setStateAsync("testVariable", { val: true, ack: true, expire: 30 });
 
+		try {
+			var img = await this.fetchImage();
+			this.log.info("set image...");
+			await this.setStateAsync("image", img);
+			this.log.info("set image successfull");
+		}
+		catch(e)
+		{
+			this.log.error(e);
+		}
+
 		// examples for the checkPassword/checkGroup functions
 		let result = await this.checkPasswordAsync("admin", "iobroker");
 		this.log.info("check user admin pw ioboker: " + result);
@@ -97,8 +142,7 @@ class Template extends utils.Adapter {
 	private onUnload(callback: () => void): void {
 		try {
 			this.log.info("cleaned everything up...");
-			callback();
-		} catch (e) {
+		} finally {
 			callback();
 		}
 	}
@@ -128,29 +172,55 @@ class Template extends utils.Adapter {
 			this.log.info(`state ${id} deleted`);
 		}
 	}
+	private async openDoor(): Promise<void> {		
+		this.log.info("Open door");
+		await this.sendRequestToDoorbird("GET", "/bha-api/open-door.cgi");		
+	}
 
-	// /**
-	//  * Some message was sent to this instance over message box. Used by email, pushover, text2speech, ...
-	//  * Using this method requires "common.message" property to be set to true in io-package.json
-	//  */
-	// private onMessage(obj: ioBroker.Message): void {
-	// 	if (typeof obj === "object" && obj.message) {
-	// 		if (obj.command === "send") {
-	// 			// e.g. send email or pushover or whatever
-	// 			this.log.info("send command");
+	private async fetchImage(): Promise<string> {	
+		this.log.info("Fetch image");	
+		var response = await this.sendRequestToDoorbird("GET", "/bha-api/image.cgi");
+		this.log.info("Fetched image successfull");
+		var b64encoded = response.toString('base64');
+		var mimetype="image/jpeg"; 
+		return "data:" + mimetype+ ";base64," + b64encoded;			
+	}
 
-	// 			// Send response in callback if required
-	// 			if (obj.callback) this.sendTo(obj.from, obj.command, "Message received", obj.callback);
-	// 		}
-	// 	}
-	// }
+	private sendRequestToDoorbird(method: string, path: string): Promise<Buffer> {
+		var ipAddress =  this.config.ipAddress;
+		var username =  this.config.username;
+		var password =  this.config.password;
+
+		var options: http.RequestOptions = { method: method, host: "192.168.178.63", path: path + "?http-user=ghdggd0002&http-password=3pjUcjaUNA" }
+		// TODO user "Authorization" header with "Basic " + btoa("ghdggd0002:3pjUcjaUNA")
+
+		return new Promise((resolve, reject) => {
+			var request = http.request(options, (response) => {
+				var body: Buffer [] = [];				
+				response.on('data', (chunk: Buffer ) => {
+					body.push(chunk);
+				});		
+				response.on('end', () => {
+					if (response.statusCode == 200) {
+						resolve(Buffer.concat(body));
+					} else {							
+						reject(new Error("" + response.statusCode));
+					}	
+				});
+			}).on("error", (err) => {
+				reject(new Error("Error: " + err.message));
+			});
+			request.end();
+		});	
+		
+	}
 
 }
 
 if (module.parent) {
 	// Export the constructor in compact mode
-	module.exports = (options: Partial<ioBroker.AdapterOptions> | undefined) => new Template(options);
+	module.exports = (options: Partial<ioBroker.AdapterOptions> | undefined) => new DoorbirdAdapter(options);
 } else {
 	// otherwise start the instance directly
-	(() => new Template())();
+	(() => new DoorbirdAdapter())();
 }
