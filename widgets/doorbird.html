@@ -3,9 +3,9 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <!-- here you can include so many js-files as you want -->
-<script type="text/javascript" src="widgets/doorbird/js/doorbird.js"></script>
 <script type="text/javascript" src="widgets/doorbird/js/SIPml-api.js"></script>
 <script type="text/javascript" src="widgets/doorbird/js/SIPCommunication.js"></script>
+<script type="text/javascript" src="widgets/doorbird/js/doorbird.js"></script>
 
 <script id="tpldoorbirdWidget" type="text/ejs" class="vis-tpl" data-vis-prev='' data-vis-set="doorbird" data-vis-type="widget" data-vis-name="Doorbird" data-vis-attrs="adapterInstance/id;">
     <div class="vis-widget <%== this.data.attr('class') %>" style="width:200px; height:200px;" id="<%= this.data.attr('wid') %>">
@@ -18,7 +18,7 @@
             </div>
             <div class="button-container">
                 <div class="button-wrapper">
-                    <button onclick='sipCall("call-audio");'>
+                    <button onclick='call()'>
 						<i class="material-icons">call</i>
 						<span>Antworten</span>
 					</button>
