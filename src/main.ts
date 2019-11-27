@@ -58,16 +58,16 @@ class DoorbirdAdapter extends utils.Adapter {
 		// // Socket.io-Events
 		// io.sockets.on('connection', function (socket: SocketIO.Server) {
 		// 	console.log('[socket.io] Ein neuer Client (Browser) hat sich verbunden.\n');
-		
+
 		//  	console.log('[socket.io] SENDE "welcome"-Event an den Client.\n');
 		//  	socket.emit('welcome', "Hello world");
-		
+
 		//  	socket.on('user agent', function (data: any) {
 		//  	console.log('[socket.io] EMPFANGE "user agent"-Event vom Client:');
 		// 	console.log(data, '\n');
 		// 	});
 		// });
-		
+
 		// Initialize your adapter here
 
 		// The adapters config (in the instance object everything under the attribute "native") is accessible via
@@ -144,6 +144,9 @@ class DoorbirdAdapter extends utils.Adapter {
 			this.log.error(e);
 		}
 
+		await this.setStateAsync("config", {val: this.config});
+
+
 		// examples for the checkPassword/checkGroup functions
 		let result = await this.checkPasswordAsync("admin", "iobroker");
 		this.log.info("check user admin pw ioboker: " + result);
@@ -188,18 +191,18 @@ class DoorbirdAdapter extends utils.Adapter {
 			this.log.info(`state ${id} deleted`);
 		}
 	}
-	private async openDoor(): Promise<void> {		
+	private async openDoor(): Promise<void> {
 		this.log.info("Open door");
-		await this.sendRequestToDoorbird("GET", "/bha-api/open-door.cgi");		
+		await this.sendRequestToDoorbird("GET", "/bha-api/open-door.cgi");
 	}
 
-	private async fetchImage(): Promise<string> {	
-		this.log.info("Fetch image");	
+	private async fetchImage(): Promise<string> {
+		this.log.info("Fetch image");
 		var response = await this.sendRequestToDoorbird("GET", "/bha-api/image.cgi");
 		this.log.info("Fetched image successfull");
 		var b64encoded = response.toString('base64');
-		var mimetype="image/jpeg"; 
-		return "data:" + mimetype+ ";base64," + b64encoded;			
+		var mimetype="image/jpeg";
+		return "data:" + mimetype+ ";base64," + b64encoded;
 	}
 
 	private sendRequestToDoorbird(method: string, path: string): Promise<Buffer> {
@@ -212,23 +215,23 @@ class DoorbirdAdapter extends utils.Adapter {
 
 		return new Promise((resolve, reject) => {
 			var request = http.request(options, (response) => {
-				var body: Buffer [] = [];				
+				var body: Buffer [] = [];
 				response.on('data', (chunk: Buffer ) => {
 					body.push(chunk);
-				});		
+				});
 				response.on('end', () => {
 					if (response.statusCode == 200) {
 						resolve(Buffer.concat(body));
-					} else {							
+					} else {
 						reject(new Error("" + response.statusCode));
-					}	
+					}
 				});
 			}).on("error", (err) => {
 				reject(new Error("Error: " + err.message));
 			});
 			request.end();
-		});	
-		
+		});
+
 	}
 
 }
