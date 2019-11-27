@@ -20,6 +20,10 @@ declare global {
 			ipAddress: string;
 			username: string;
 			password: string;
+			asteriskPrivateIdentity: string;
+			asteriskPasword: string;
+			asteriskPublicIdentity: string;
+			asteriskRealm: string;
 		}
 	}
 }
@@ -93,6 +97,18 @@ class DoorbirdAdapter extends utils.Adapter {
 			common: {
 				name: "image",
 				type: "string",
+				role: "indicator",
+				read: true,
+				write: true,
+			},
+			native: {},
+		});
+
+		await this.setObjectAsync("config", {
+			type: "state",
+			common: {
+				name: "config",
+				type: "object",
 				role: "indicator",
 				read: true,
 				write: true,
