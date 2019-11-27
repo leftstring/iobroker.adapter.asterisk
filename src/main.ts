@@ -21,7 +21,7 @@ declare global {
 			username: string;
 			password: string;
 			asteriskPrivateIdentity: string;
-			asteriskPasword: string;
+			asteriskPassword: string;
 			asteriskPublicIdentity: string;
 			asteriskRealm: string;
 		}
@@ -144,8 +144,8 @@ class DoorbirdAdapter extends utils.Adapter {
 			this.log.error(e);
 		}
 
-		await this.setStateAsync("config", {val: this.config});
 
+		await this.setStateAsync("config", {val: JSON.stringify(this.config)});
 
 		// examples for the checkPassword/checkGroup functions
 		let result = await this.checkPasswordAsync("admin", "iobroker");

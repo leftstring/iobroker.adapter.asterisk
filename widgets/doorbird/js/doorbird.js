@@ -22,11 +22,14 @@ window.onload = function () {
 	}, "doorbird.0.image");
 	document.getElementById("image").src = vis.states["doorbird.0.image.val"];
 
-	const realm = vis.states["doorbird.0.config.val"].realm;
-	const privateIdentity = vis.states["doorbird.0.config.val"].privateIdentity;
-	const publicIdentity = vis.states["doorbird.0.config.val"].publicIdentity;
-	const password = vis.states["doorbird.0.config.val"].password;
-	const displayName = vis.states["doorbird.0.config.val"].displayName;
+	const astersikConfJSON = vis.states["doorbird.0.config.val"];
+	const astersikConf = JSON.parse(astersikConfJSON);
+
+	const realm = astersikConf.asteriskRealm;
+	const privateIdentity = astersikConf.asteriskPrivateIdentity;
+	const publicIdentity = astersikConf.asteriskPublicIdentity;
+	const password = astersikConf.asteriskPassword;
+	const displayName = 'ioBroker Doorbird Adapter';
 	const audioElement = document.getElementById('audio_remote');
 
 	sipCommunication = new SIPCommunication(realm, impi, publicIdentity, password, displayName, audioElement);
