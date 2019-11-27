@@ -2,7 +2,7 @@
 
 let sipCommunication;
 
-document.onload = function () {
+window.onload = function () {
 	vis.registerOnChange(function () {
 		// var request = new XMLHttpRequest();
 		// request.open("GET", "http://192.168.178.63/bha-api/image.cgi?http-user=ghdggd0002&http-password=3pjUcjaUNA", true);
