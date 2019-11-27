@@ -1,9 +1,9 @@
 {
 	"common": {
 		"name": "doorbird",
-		"version": "0.0.1",
+		"version": "0.9.0",
 		"news": {
-			"0.0.1": {
+			"0.9.0": {
 				"en": "initial release",
 				"de": "Erstveröffentlichung"
 			}
@@ -56,8 +56,9 @@
 		]
 	},
 	"native": {
-		"option1": true,
-		"option2": "42"
+		"ipAddress": "",
+		"username": "",
+		"password": ""
 	},
 	"objects": [],
 	"instanceObjects": []
