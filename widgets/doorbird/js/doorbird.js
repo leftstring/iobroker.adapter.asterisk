@@ -1,5 +1,7 @@
 "use strict";
 
+let sipCommunication;
+
 document.onload = function () {
 	vis.registerOnChange(function () {
 		// var request = new XMLHttpRequest();
