@@ -3,27 +3,31 @@
 
 systemDictionary = {
     "username": {
-        "en": "Username",
-        "de": "Benutzername"
+        "en": "Doorbird Username",
+        "de": "Doorbird Benutzername"
     },
     "password": {
-        "en": "Password",
-        "de": "Passwort"
+        "en": "Doorbird Password",
+        "de": "Doorbird Passwort"
     },
     "ipAddress": {
-        "en": "IP Address",
-        "de": "IP-Adresse"
+        "en": "Doorbird IP Address",
+        "de": "Doorbird IP-Adresse"
     },
     "asteriskPrivateIdentity": {
-        "en": "Private Identity",
-        "de": "Pirvate Identität"
+        "en": "Asterisk Private Identity",
+        "de": "Asterisk Pirvate Identität"
     },
     "asteriskPublicIdentity": {
-        "en": "Public Identity",
-        "de": "Öffentliche Identität"
+        "en": "Asterisk Public Identity",
+        "de": "Asterisk Öffentliche Identität"
     },
     "asteriskRealm": {
-        "en": "Realm",
-        "de": "Realm"
-    }
+        "en": "Asterisk Realm",
+        "de": "Asterisk Realm"
+    },    
+    "asteriskPassword": {
+        "en": "Asterisk Password",
+        "de": "Asterisk Passwort"
+    },
 };

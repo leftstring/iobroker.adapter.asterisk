@@ -2,46 +2,54 @@
 
 let sipCommunication;
 
-window.onload = function () {
-	vis.registerOnChange(function () {
-		// var request = new XMLHttpRequest();
-		// request.open("GET", "http://192.168.178.63/bha-api/image.cgi?http-user=ghdggd0002&http-password=3pjUcjaUNA", true);
-		// //request.setRequestHeader("Authorization", "Basic " + btoa("ghdggd0002:3pjUcjaUNA"));
-		// request.responseType = "arraybuffer";
-		// request.onload = function (e) {
-		//   var arrayBuffer = request.response;
-		//   if (arrayBuffer) {
-		// 	var u8 = new Uint8Array(arrayBuffer);
-		// 	var b64encoded = btoa(String.fromCharCode.apply(null, u8));
-		// 	var mimetype="image/jpeg";
-		// 	document.getElementById("image").src="data:"+mimetype+";base64,"+b64encoded;
-		//   }
-		// };
-		// request.send();
-		console.log("update image...");
-		document.getElementById("image").src = undefined;
-		document.getElementById("image").src = vis.states["doorbird.0.image.val"];
-	}, "doorbird.0.image");
-	document.getElementById("image").src = vis.states["doorbird.0.image.val"];
+console.log("start widget");
 
-	const astersikConfJSON = vis.states["doorbird.0.config.val"];
-	const astersikConf = JSON.parse(astersikConfJSON);
+vis.binds.doorbird = {
+	version: "0.9.0",
+    init: function (adapterInstance) {   
+		vis.binds.doorbird.adapterInstance = adapterInstance;
+	},
+	initPreview: function(previewImage) {
+		//vis.states.bind(adapterInstance + ".previewImage.val", (e, val) => {	});
+		setInterval(()=> {
+			console.log("update preview image");
+			vis.conn.getStates(null, (error, data)=>{vis.updateStates(data);})
+			previewImage.src = vis.states[vis.binds.doorbird.adapterInstance + ".previewImage.val"];
+		}, 1000)		
 
-	const realm = astersikConf.asteriskRealm;
-	const privateIdentity = astersikConf.asteriskPrivateIdentity;
-	const publicIdentity = astersikConf.asteriskPublicIdentity;
-	const password = astersikConf.asteriskPassword;
-	const displayName = 'ioBroker Doorbird Adapter';
-	const audioElement = document.getElementById('audio_remote');
+		console.log("init preview image");
+		vis.conn.getStates(null, (error, data)=>{vis.updateStates(data);})
+		previewImage.src = vis.states[vis.binds.doorbird.adapterInstance + ".previewImage.val"];
+	},
+	initSIP: function(audioElement) {
+		// currently raises an error:
+		// SyntaxError: Unexpected token u in JSON at position 0SyntaxError: Unexpected token u in JSON at position 0
 
-	sipCommunication = new SIPCommunication(realm, impi, publicIdentity, password, displayName, audioElement);
+		//vis.conn.getStates(null, (error, data)=>{vis.updateStates(data);})
+		
+		//const astersikConfJSON = vis.states[vis.binds.doorbird.adapterInstance + ".config.val"];
+		//const astersikConf = JSON.parse(astersikConfJSON);
+
+		//const realm = astersikConf.asteriskRealm;
+		//const privateIdentity = astersikConf.asteriskPrivateIdentity;
+		//const publicIdentity = astersikConf.asteriskPublicIdentity;
+		//const password = astersikConf.asteriskPassword;
+		//const displayName = 'ioBroker Doorbird Adapter';
+
+		//sipCommunication = new SIPCommunication(realm, impi, publicIdentity, password, displayName, audioElement);
+	},
+	openDoor: function() {
+		console.log("open door...");
+		vis.setValue(vis.binds.doorbird.adapterInstance + ".openDoorRequested", true);
+	},	
+	call: function() {
+		console.log("call...");
+		var previewImage = document.getElementById("preview-img");
+		previewImage.style.display = "none";
+		var videoElement = document.getElementById("video_remote");
+		videoElement.style.display = "block";
+		videoElement.src = vis.states[vis.binds.doorbird.adapterInstance + ".videoSource.val"];
+
+		sipCommunication.call('6002');
+	}	
 };
-
-function openDoor() {
-	console.log("open door...");
-	vis.setValue("doorbird.0.testVariable", true);
-}
-
-function call() {
-	sipCommunication.call('6002');
-}
