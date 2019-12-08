@@ -60,6 +60,10 @@ class SIPCommunication {
         this._registerSession.register();
     }
 
+    _acceptCall(event) {
+        event.newSession.accept();
+    }
+
     /*
      * EVENTHANDLER
      */
@@ -67,6 +71,9 @@ class SIPCommunication {
         if(event.type == 'started'){
             console.log('Stack Event.', 'Started.');
             this._login();
+        }
+        else if(e.type == 'i_new_call'){ // incoming audio/video call
+            this._acceptCall(e);
         }
     }
 

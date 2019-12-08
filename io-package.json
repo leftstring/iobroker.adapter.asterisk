@@ -58,7 +58,11 @@
 	"native": {
 		"ipAddress": "",
 		"username": "",
-		"password": ""
+		"password": "",
+		"asteriskPrivateIdentity":"",
+		"asteriskPassword": "",
+		"asteriskPublicIdentity": "",
+		"asteriskRealm": ""
 	},
 	"objects": [],
 	"instanceObjects": []
