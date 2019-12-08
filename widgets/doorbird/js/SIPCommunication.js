@@ -44,6 +44,11 @@ class SIPCommunication {
             password: password,
             display_name: displayName,
             websocket_proxy_url: "ws://192.168.11.31:8088/ws",
+            outbound_proxy_url: null,
+            ice_servers: null,
+            enable_rtcweb_breaker: false,
+            enable_early_ims: true, // Must be true unless you're using a real IMS network
+            enable_media_stream_cache: true,
             events_listener: {events: '*', listener: (e) => this._stackEventsListener(e)}
         });
 
