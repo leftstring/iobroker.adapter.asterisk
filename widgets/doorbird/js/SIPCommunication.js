@@ -1,8 +1,7 @@
 class SIPCommunication {
 
-    constructor(realm, privateIdentity, publicIdentity, password, displayName, audioElement){
+    constructor(realm, privateIdentity, publicIdentity, password, displayName, audioElement){      
         this._init(realm, privateIdentity, publicIdentity, password, displayName);
-
         this._audioRemoteElement = audioElement;
     }
 
@@ -54,7 +53,8 @@ class SIPCommunication {
     _login(){
         this._registerSession = this._sipStack.newSession(
             'register',
-            {events_listener: {events: '*', listener: this._sessionEventsListener}
+            {
+                events_listener: {events: '*', listener: (e) => this._sessionEventsListener(e) }
             });
 
         this._registerSession.register();
