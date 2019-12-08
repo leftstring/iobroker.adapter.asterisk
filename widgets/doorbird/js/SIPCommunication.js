@@ -13,7 +13,7 @@ class SIPCommunication {
             'call-audio', {
                 events_listener: {
                     events: '*',
-                    listener: this._callEventsListener
+                    listener: (e) => this._callEventsListener(e)
                 },
                 audio_remote: this._audioRemoteElement
             });
@@ -44,7 +44,7 @@ class SIPCommunication {
             password: password,
             display_name: displayName,
             websocket_proxy_url: "ws://192.168.11.31:8088/ws",
-            events_listener: {events: '*', listener: this._stackEventsListener}
+            events_listener: {events: '*', listener: (e) => this._stackEventsListener(e)}
         });
 
         this._sipStack.start();
@@ -54,7 +54,7 @@ class SIPCommunication {
         this._registerSession = this._sipStack.newSession(
             'register',
             {
-                events_listener: {events: '*', listener: (e) => this._sessionEventsListener(this, e) }
+                events_listener: {events: '*', listener: (e) => this._sessionEventsListener(e)}
             });
 
         this._registerSession.register();
@@ -63,10 +63,10 @@ class SIPCommunication {
     /*
      * EVENTHANDLER
      */
-    _stackEventsListener(that, event) {
+    _stackEventsListener(event) {
         if(event.type == 'started'){
             console.log('Stack Event.', 'Started.');
-            that._login();
+            this._login();
         }
     }
 
