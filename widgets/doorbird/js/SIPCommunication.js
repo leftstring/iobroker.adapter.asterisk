@@ -33,7 +33,7 @@ class SIPCommunication {
             console.error (e.message);
         }
 
-        SIPml.setWebRtcType(null);
+        navigator.webkitGetUserMedia = true;
         SIPml.init(readyCallback, errorCallback);
     }
 
