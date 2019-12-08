@@ -38,7 +38,7 @@ vis.binds.doorbird = {
 			const password = astersikConf.asteriskPassword;
 			const displayName = 'ioBroker Doorbird Adapter';		
 
-			sipCommunication = new SIPCommunication(realm, impi, publicIdentity, password, displayName, audioElement);
+			sipCommunication = new SIPCommunication(realm, privateIdentity, publicIdentity, password, displayName, audioElement);
 		});
 	},
 	openDoor: function() {
