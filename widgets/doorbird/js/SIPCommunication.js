@@ -33,7 +33,6 @@ class SIPCommunication {
             console.error (e.message);
         }
 
-        navigator.webkitGetUserMedia = true;
         SIPml.init(readyCallback, errorCallback);
     }
 
