@@ -110,7 +110,7 @@ if (navigator.mozGetUserMedia) {
         b.play()
     }
 } else {
-    if (navigator.webkitGetUserMedia) {
+    if (true) {
         console.log("This appears to be Chrome");
         webrtcDetectedBrowser = "chrome";
         var result = navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
