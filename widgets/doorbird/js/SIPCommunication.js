@@ -72,8 +72,8 @@ class SIPCommunication {
             console.log('Stack Event.', 'Started.');
             this._login();
         }
-        else if(e.type == 'i_new_call'){ // incoming audio/video call
-            this._acceptCall(e);
+        else if(event.type == 'i_new_call'){ // incoming audio/video call
+            this._acceptCall(event);
         }
     }
 
