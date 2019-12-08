@@ -44,6 +44,7 @@ class SIPCommunication {
             impu: impu, //public
             password: password,
             display_name: displayName,
+            websocket_proxy_url: "ws://192.168.11.31:8088/ws",
             events_listener: {events: '*', listener: this._stackEventsListener}
         });
 
