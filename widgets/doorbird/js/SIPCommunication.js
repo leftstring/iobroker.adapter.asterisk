@@ -68,19 +68,18 @@ class SIPCommunication {
      * EVENTHANDLER
      */
     _stackEventsListener(event) {
-        if(event.type == 'started'){
-            console.log('Stack Event.', 'Started.');
+        console.log('Stack Event.', event.type);
+        if(event.type == 'started'){        
             this._login();
         }
-        else if(event.type == 'i_new_call'){ // incoming audio/video call
+        else if(event.type == 'i_new_call'){ 
+            // incoming audio/video call
             this._acceptCall(event);
         }
     }
 
     _sessionEventsListener(event) {
-        if(event.type == 'connected'){
-            console.log('Session Event.', 'Connected.');
-        }
+        console.log('Session Event.', event.type);
     }
 
     _callEventsListener(event) {
