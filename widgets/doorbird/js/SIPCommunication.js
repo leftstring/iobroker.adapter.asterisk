@@ -54,7 +54,7 @@ class SIPCommunication {
         this._registerSession = this._sipStack.newSession(
             'register',
             {
-                events_listener: {events: '*', listener: (e) => this._sessionEventsListener(e) }
+                events_listener: {events: '*', listener: (e) => this._sessionEventsListener(this, e) }
             });
 
         this._registerSession.register();
@@ -63,10 +63,10 @@ class SIPCommunication {
     /*
      * EVENTHANDLER
      */
-    _stackEventsListener(event) {
+    _stackEventsListener(that, event) {
         if(event.type == 'started'){
             console.log('Stack Event.', 'Started.');
-            this._login();
+            that._login();
         }
     }
 
