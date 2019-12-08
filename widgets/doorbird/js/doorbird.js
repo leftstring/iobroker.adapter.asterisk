@@ -22,21 +22,18 @@ vis.binds.doorbird = {
 		previewImage.src = vis.states[vis.binds.doorbird.adapterInstance + ".previewImage.val"];
 	},
 	initSIP: function(audioElement) {
-		// currently raises an error:
-		// SyntaxError: Unexpected token u in JSON at position 0SyntaxError: Unexpected token u in JSON at position 0
-
-		//vis.conn.getStates(null, (error, data)=>{vis.updateStates(data);})
+		vis.conn.getStates(null, (error, data)=>{vis.updateStates(data);})
 		
-		//const astersikConfJSON = vis.states[vis.binds.doorbird.adapterInstance + ".config.val"];
-		//const astersikConf = JSON.parse(astersikConfJSON);
+		const astersikConfJSON = vis.states[vis.binds.doorbird.adapterInstance + ".config.val"];
+		const astersikConf = JSON.parse(astersikConfJSON);
 
-		//const realm = astersikConf.asteriskRealm;
-		//const privateIdentity = astersikConf.asteriskPrivateIdentity;
-		//const publicIdentity = astersikConf.asteriskPublicIdentity;
-		//const password = astersikConf.asteriskPassword;
-		//const displayName = 'ioBroker Doorbird Adapter';
+		const realm = astersikConf.asteriskRealm;
+		const privateIdentity = astersikConf.asteriskPrivateIdentity;
+		const publicIdentity = astersikConf.asteriskPublicIdentity;
+		const password = astersikConf.asteriskPassword;
+		const displayName = 'ioBroker Doorbird Adapter';
 
-		//sipCommunication = new SIPCommunication(realm, impi, publicIdentity, password, displayName, audioElement);
+		sipCommunication = new SIPCommunication(realm, impi, publicIdentity, password, displayName, audioElement);
 	},
 	openDoor: function() {
 		console.log("open door...");
