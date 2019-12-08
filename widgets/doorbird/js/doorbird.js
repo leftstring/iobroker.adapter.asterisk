@@ -13,27 +13,33 @@ vis.binds.doorbird = {
 		//vis.states.bind(adapterInstance + ".previewImage.val", (e, val) => {	});
 		setInterval(()=> {
 			console.log("update preview image");
-			vis.conn.getStates(null, (error, data)=>{vis.updateStates(data);})
-			previewImage.src = vis.states[vis.binds.doorbird.adapterInstance + ".previewImage.val"];
+			vis.conn.getStates(null, (error, data) => {
+				vis.updateStates(data);			
+				previewImage.src = vis.states[vis.binds.doorbird.adapterInstance + ".previewImage.val"];
+			});
 		}, 1000)		
 
 		console.log("init preview image");
-		vis.conn.getStates(null, (error, data)=>{vis.updateStates(data);})
-		previewImage.src = vis.states[vis.binds.doorbird.adapterInstance + ".previewImage.val"];
+		vis.conn.getStates(null, (error, data) => {
+			vis.updateStates(data);
+			previewImage.src = vis.states[vis.binds.doorbird.adapterInstance + ".previewImage.val"];
+		});
 	},
 	initSIP: function(audioElement) {
-		vis.conn.getStates(null, (error, data)=>{vis.updateStates(data);})
+		vis.conn.getStates(null, (error, data) => {
+			vis.updateStates(data);
 		
-		const astersikConfJSON = vis.states[vis.binds.doorbird.adapterInstance + ".config.val"];
-		const astersikConf = JSON.parse(astersikConfJSON);
+			const astersikConfJSON = vis.states[vis.binds.doorbird.adapterInstance + ".config.val"];
+			const astersikConf = JSON.parse(astersikConfJSON);
 
-		const realm = astersikConf.asteriskRealm;
-		const privateIdentity = astersikConf.asteriskPrivateIdentity;
-		const publicIdentity = astersikConf.asteriskPublicIdentity;
-		const password = astersikConf.asteriskPassword;
-		const displayName = 'ioBroker Doorbird Adapter';
+			const realm = astersikConf.asteriskRealm;
+			const privateIdentity = astersikConf.asteriskPrivateIdentity;
+			const publicIdentity = astersikConf.asteriskPublicIdentity;
+			const password = astersikConf.asteriskPassword;
+			const displayName = 'ioBroker Doorbird Adapter';		
 
-		sipCommunication = new SIPCommunication(realm, impi, publicIdentity, password, displayName, audioElement);
+			sipCommunication = new SIPCommunication(realm, impi, publicIdentity, password, displayName, audioElement);
+		});
 	},
 	openDoor: function() {
 		console.log("open door...");
