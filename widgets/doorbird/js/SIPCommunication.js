@@ -1,6 +1,6 @@
 class SIPCommunication {
 
-    constructor(realm, privateIdentity, publicIdentity, password, displayName, audioElement){      
+    constructor(realm, privateIdentity, publicIdentity, password, displayName, audioElement){             
         this._init(realm, privateIdentity, publicIdentity, password, displayName);
         this._audioRemoteElement = audioElement;
     }
@@ -33,6 +33,7 @@ class SIPCommunication {
             console.error (e.message);
         }
 
+        SIPml.setWebRtcType(null);
         SIPml.init(readyCallback, errorCallback);
     }
 
