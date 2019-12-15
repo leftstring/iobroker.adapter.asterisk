@@ -1,3 +1,5 @@
+import { isNullOrUndefined } from "util";
+
 class SIPCommunication {
 
     constructor(realm, privateIdentity, publicIdentity, password, displayName, audioElement){             
@@ -19,6 +21,10 @@ class SIPCommunication {
             });
 
         callSession.call(identity);
+    }
+
+    acceptCall() {
+        this.incomingCallEvent.newSession.accept();
     }
 
     /*
@@ -43,7 +49,7 @@ class SIPCommunication {
             impu: impu, //public
             password: password,
             display_name: displayName,
-            websocket_proxy_url: "ws://192.168.11.31:8088/ws",
+            websocket_proxy_url: "wss://192.168.11.31:8089/ws",
             outbound_proxy_url: null,
             ice_servers: null,
             enable_rtcweb_breaker: false,
@@ -65,10 +71,6 @@ class SIPCommunication {
         this._registerSession.register();
     }
 
-    _acceptCall(event) {
-        event.newSession.accept();
-    }
-
     /*
      * EVENTHANDLER
      */
@@ -79,7 +81,10 @@ class SIPCommunication {
         }
         else if(event.type == 'i_new_call'){ 
             // incoming audio/video call
-            this._acceptCall(event);
+            this.incomingCallEvent = event;
+            if(this.onCallIncoming){
+                this.onCallIncoming();
+            }
         }
     }
 

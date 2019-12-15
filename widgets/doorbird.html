@@ -9,14 +9,13 @@
 	<div class="vis-widget <%== this.data.attr('class') %>" style="width:200px; height:200px;" id="<%= this.data.attr('wid') %>">
         <div class="widget-container vis-widget-body <%== this.data.attr('class') %>">
             <h1 class="header">Türklingel</h1>
-            <div class="video-container">
-                <img id="video_remote" class="video-content" style="display: none;"/>
-                <audio id="audio_remote" <%= function(element) {  vis.binds.doorbird.initSIP(element); } %>/>
-                <img id="preview-img" class="video-content" <%= function(element) {  vis.binds.doorbird.initPreview(element); } %>/>
+            <div class="video-container">               
+                <audio id="audioRemote" <%= function(element) {  vis.binds.doorbird.initSIP(element); } %>/>
+                <img id="videoElement" class="video-content"/>
             </div>
             <div class="button-container">
                 <div class="button-wrapper">
-                    <button onclick="vis.binds.doorbird.call()">
+                    <button onclick="vis.binds.doorbird.acceptCall()">
 						<i class="material-icons">call</i>
 						<span>Antworten</span>
 					</button>

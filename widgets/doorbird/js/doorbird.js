@@ -9,22 +9,6 @@ vis.binds.doorbird = {
     init: function (adapterInstance) {   
 		vis.binds.doorbird.adapterInstance = adapterInstance;
 	},
-	initPreview: function(previewImage) {
-		//vis.states.bind(adapterInstance + ".previewImage.val", (e, val) => {	});
-		setInterval(()=> {
-			console.log("update preview image");
-			vis.conn.getStates(null, (error, data) => {
-				vis.updateStates(data);			
-				previewImage.src = vis.states[vis.binds.doorbird.adapterInstance + ".previewImage.val"];
-			});
-		}, 1000)		
-
-		console.log("init preview image");
-		vis.conn.getStates(null, (error, data) => {
-			vis.updateStates(data);
-			previewImage.src = vis.states[vis.binds.doorbird.adapterInstance + ".previewImage.val"];
-		});
-	},
 	initSIP: function(audioElement) {
 		vis.conn.getStates(null, (error, data) => {
 			vis.updateStates(data);
@@ -39,20 +23,37 @@ vis.binds.doorbird = {
 			const displayName = 'ioBroker Doorbird Adapter';		
 
 			sipCommunication = new SIPCommunication(realm, privateIdentity, publicIdentity, password, displayName, audioElement);
+			sipCommunication.onCallIncoming = vis.binds.doorbird.onCallIncoming;
+			sipCommunication.onCallEnded = vis.binds.doorbird.onCallEnded;
 		});
 	},
-	openDoor: function() {
-		console.log("open door...");
-		vis.setValue(vis.binds.doorbird.adapterInstance + ".openDoorRequested", true);
+	onCallIncoming: function() {
+		console.log("call incoming");	
+		var videoElement = document.getElementById("videoElement");
+		vis.binds.doorbird.intervall = setInterval(()=> {
+			console.log("update preview image");			
+			videoElement.src = undefined;
+			videoElement.src = vis.states[vis.binds.doorbird.adapterInstance + ".imageSource.val"];			
+		}, 1000)
 	},	
-	call: function() {
-		console.log("call...");
-		var previewImage = document.getElementById("preview-img");
-		previewImage.style.display = "none";
-		var videoElement = document.getElementById("video_remote");
-		videoElement.style.display = "block";
-		videoElement.src = vis.states[vis.binds.doorbird.adapterInstance + ".videoSource.val"];
-
-		sipCommunication.call('6002');
-	}	
+	onCallEnded: function() {		
+		console.log("call ended");	
+		if(vis.binds.doorbird.intervall) {
+			clearInterval(vis.binds.doorbird.intervall);
+		 	vis.binds.doorbird.intervall = undefined;
+		}
+		var videoElement = document.getElementById("videoElement");
+		videoElement.src = undefined;
+	},
+	acceptCall: function() {
+		console.log("accept call");		
+		sipCommunication.acceptCall();
+		console.log("show video stream");			
+		var videoElement = document.getElementById("videoElement");			
+		videoElement.src = vis.states[vis.binds.doorbird.adapterInstance + ".videoSource.val"];		
+	},
+	openDoor: function() {
+		console.log("open door");
+		vis.setValue(vis.binds.doorbird.adapterInstance + ".openDoorRequested", true);
+	}
 };

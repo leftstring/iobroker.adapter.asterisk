@@ -1,17 +1,9 @@
-/*
- * Created with @iobroker/create-adapter v1.17.0
- */
-
 // The adapter-core module gives you access to the core ioBroker functions
-// you need to create an adapter
 import * as utils from "@iobroker/adapter-core";
+
 import http = require("http");
 
-// Load your modules here, e.g.:
-// import * as fs from "fs";
-
 // Augment the adapter.config object with the actual types
-// TODO: delete this in the next version
 declare global {
 	// eslint-disable-next-line @typescript-eslint/no-namespace
 	namespace ioBroker {
@@ -31,7 +23,7 @@ class DoorbirdAdapter extends utils.Adapter {
 
 	static readonly CONFIG_VAR = "config"
 	static readonly OPEN_DOOR_REQUESTED_VAR = "openDoorRequested"
-	static readonly PREVIEW_IMAGE_VAR = "previewImage"
+	static readonly IMAGE_SOURCE_VAR = "imageSource"
 	static readonly VIDEO_SOURCE_VAR = "videoSource"
 
 	public constructor(options: Partial<ioBroker.AdapterOptions> = {}) {
@@ -50,47 +42,14 @@ class DoorbirdAdapter extends utils.Adapter {
 	 */
 	private async onReady(): Promise<void> {
 		this.log.info("start doorbird adapter");
-		// for test only:
-		this.config.ipAddress = "192.168.178.63";
-		this.config.username = "ghdggd0002";
-		this.config.password = "3pjUcjaUNA";
 
 		await this.setUpVariables();
 
 		await this.setStateAsync(DoorbirdAdapter.CONFIG_VAR, {val: JSON.stringify(this.config)});
 
-		try {
-			var img = await this.fetchPreviewImage();
-			this.log.info("set preview image...");
-			await this.setStateAsync(DoorbirdAdapter.PREVIEW_IMAGE_VAR, img);
-			this.log.info("set preview image successfull");
-		}
-		catch(e)
-		{
-			this.log.error(e);
-		}
-
-		setInterval(async()=> {
-			try {
-				var img = await this.fetchPreviewImage();
-				this.log.info("set preview image...");
-				await this.setStateAsync(DoorbirdAdapter.PREVIEW_IMAGE_VAR, img);
-				this.log.info("set preview image successfull");
-			}
-			catch(e)
-			{
-				this.log.error(e);
-			}
-		}, 2000)
-
-		var auth = "?http-user=" + this.config.username + "&http-password=" + this.config.password;
-		await this.setStateAsync("videoSource", "http://" + this.config.ipAddress + "/bha-api/video.cgi" + auth);
-
-		// examples for the checkPassword/checkGroup functions
-		//let result = await this.checkPasswordAsync("admin", "iobroker");
-		//this.log.info("check user admin pw ioboker: " + result);
-		//result = await this.checkGroupAsync("admin", "admin");
-		//this.log.info("check group user admin group admin: " + result);
+		var auth = "?http-user=" + this.config.username + "&http-password=" + this.config.password;	
+		await this.setStateAsync(DoorbirdAdapter.IMAGE_SOURCE_VAR, "http://" + this.config.ipAddress + "/bha-api/image.cgi" + auth);
+		await this.setStateAsync(DoorbirdAdapter.VIDEO_SOURCE_VAR, "http://" + this.config.ipAddress + "/bha-api/video.cgi" + auth);
 	}
 
 	private async setUpVariables() {
@@ -118,10 +77,10 @@ class DoorbirdAdapter extends utils.Adapter {
 			native: {},
 		});
 
-		await this.setObjectAsync(DoorbirdAdapter.PREVIEW_IMAGE_VAR, {
+		await this.setObjectAsync(DoorbirdAdapter.IMAGE_SOURCE_VAR, {
 			type: "state",
 			common: {
-				name: DoorbirdAdapter.PREVIEW_IMAGE_VAR,
+				name: DoorbirdAdapter.IMAGE_SOURCE_VAR,
 				type: "string",
 				role: "text",
 				read: true,
@@ -193,17 +152,8 @@ class DoorbirdAdapter extends utils.Adapter {
 
 	private async openDoor(): Promise<void> {		
 		this.log.info("Open door");		
-		//await this.sendRequestToDoorbird("GET", "/bha-api/open-door.cgi");
+		await this.sendRequestToDoorbird("GET", "/bha-api/open-door.cgi");
 		await this.setStateAsync("openDoorRequested", false);
-	}
-
-	private async fetchPreviewImage(): Promise<string> {
-		this.log.info("Fetch preview image");
-		var response = await this.sendRequestToDoorbird("GET", "/bha-api/image.cgi");
-		this.log.info("Fetched preview image successfull");
-		var b64encoded = response.toString('base64');
-		var mimetype="image/jpeg";
-		return "data:" + mimetype+ ";base64," + b64encoded;
 	}
 
 	private sendRequestToDoorbird(method: string, path: string): Promise<Buffer> {
