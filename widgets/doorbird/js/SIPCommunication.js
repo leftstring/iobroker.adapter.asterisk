@@ -30,9 +30,9 @@ class SIPCommunication {
     /*
     * PRIVATE METHODS
     */
-    _init(realm, impi, impu, password, displayName){
+    _init(realm, privateIdentity, publicIdentity, password, displayName){
         let readyCallback = (e) => {
-            this._createSipStack(realm, impi, impu, password, displayName);
+            this._createSipStack(realm, privateIdentity, publicIdentity, password, displayName);
         }
 
         let errorCallback = (e) => {
@@ -42,11 +42,11 @@ class SIPCommunication {
         SIPml.init(readyCallback, errorCallback);
     }
 
-    _createSipStack(realm, impi, impu, password, displayName){
+    _createSipStack(realm, privateIdentity, publicIdentity, password, displayName){
         this._sipStack = new SIPml.Stack({
             realm: realm,
-            impi: impi, //private
-            impu: impu, //public
+            impi: privateIdentity, //private
+            impu: publicIdentity, //public
             password: password,
             display_name: displayName,
             websocket_proxy_url: "wss://192.168.11.31:8089/ws",
@@ -72,7 +72,7 @@ class SIPCommunication {
     }
 
     /*
-     * EVENTHANDLER
+     * EVENT HANDLER
      */
     _stackEventsListener(event) {
         console.log('Stack Event.', event.type);
