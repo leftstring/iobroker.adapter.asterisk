@@ -44,3 +44,31 @@
 .button-wrapper span {
 	margin-left: 4px;
 }
+
+#volume-slider {  
+	-webkit-appearance: none;
+	background: lightgray;
+	cursor: pointer;
+	height: 20px;
+	overflow: hidden;
+	outline: none;
+}
+  
+#volume-slider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 0px;
+	height: 0px;
+	background: dodgerblue;
+	cursor: pointer;
+	box-shadow: -100vw 0 0 100vw dodgerblue;
+}
+  
+#volume-slider::-moz-range-thumb {
+	width: 0px;
+	height: 0px;
+	background: dodgerblue;
+	cursor: pointer;
+	box-shadow: -100vw 0 0 100vw dodgerblue;
+	border: none;
+}

@@ -1,9 +1,7 @@
-import { isNullOrUndefined } from "util";
-
 class SIPCommunication {
 
-    constructor(realm, privateIdentity, publicIdentity, password, displayName, audioElement){             
-        this._init(realm, privateIdentity, publicIdentity, password, displayName);
+    constructor(realm, privateIdentity, publicIdentity, password, displayName, websocket_proxy_url, audioElement){             
+        this._init(realm, privateIdentity, publicIdentity, password, displayName, websocket_proxy_url);
         this._audioRemoteElement = audioElement;
     }
 
@@ -24,15 +22,15 @@ class SIPCommunication {
     }
 
     acceptCall() {
-        this.incomingCallEvent.newSession.accept();
+        this.incomingCallSession.accept();
     }
 
     /*
     * PRIVATE METHODS
     */
-    _init(realm, privateIdentity, publicIdentity, password, displayName){
+    _init(realm, privateIdentity, publicIdentity, password, displayName, websocket_proxy_url){
         let readyCallback = (e) => {
-            this._createSipStack(realm, privateIdentity, publicIdentity, password, displayName);
+            this._createSipStack(realm, privateIdentity, publicIdentity, password, displayName, websocket_proxy_url);
         }
 
         let errorCallback = (e) => {
@@ -42,16 +40,16 @@ class SIPCommunication {
         SIPml.init(readyCallback, errorCallback);
     }
 
-    _createSipStack(realm, privateIdentity, publicIdentity, password, displayName){
+    _createSipStack(realm, privateIdentity, publicIdentity, password, displayName, websocket_proxy_url){
         this._sipStack = new SIPml.Stack({
             realm: realm,
             impi: privateIdentity, //private
             impu: publicIdentity, //public
             password: password,
             display_name: displayName,
-            websocket_proxy_url: "wss://192.168.11.31:8089/ws",
+            websocket_proxy_url: websocket_proxy_url,
             outbound_proxy_url: null,
-            ice_servers: null,
+            ice_servers: "[]",
             enable_rtcweb_breaker: false,
             enable_early_ims: true, // Must be true unless you're using a real IMS network
             enable_media_stream_cache: true,
@@ -81,7 +79,11 @@ class SIPCommunication {
         }
         else if(event.type == 'i_new_call'){ 
             // incoming audio/video call
-            this.incomingCallEvent = event;
+            this.incomingCallSession = event.newSession;
+            this.incomingCallSession.setConfiguration({
+                audio_remote:  this._audioRemoteElement,
+                events_listener: { events: '*', listener: (e) => this._callEventsListener(e)},           
+            });
             if(this.onCallIncoming){
                 this.onCallIncoming();
             }
@@ -94,6 +96,14 @@ class SIPCommunication {
 
     _callEventsListener(event) {
         console.log('Call Event.', event.type);
+        if(event.type == 'connected'){
+            this._audioRemoteElement.play();
+        }
+        if(event.type == 'terminated'){
+            if(this.onCallTerminated){
+                this.onCallTerminated();
+            }
+        }
     }
 
 }
