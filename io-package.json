@@ -1,6 +1,6 @@
 {
 	"common": {
-		"name": "asteriskDoorbirdAdapter",
+		"name": "iobroker.adapter.asterisk",
 		"version": "0.9.0",
 		"news": {
 			"0.9.0": {
