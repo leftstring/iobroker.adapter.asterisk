@@ -6,7 +6,7 @@ console.log("start widget");
 
 vis.binds.doorbird = {
 	version: "0.9.0",
-    init: function (adapterInstance) {
+    init: function (adapterInstance, adapterWidget) {
 		vis.binds.doorbird.adapterInstance = adapterInstance;
 	},
 	initSIP: function(audioElement) {

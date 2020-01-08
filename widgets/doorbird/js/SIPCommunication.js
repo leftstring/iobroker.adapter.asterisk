@@ -1,8 +1,10 @@
 class SIPCommunication {
 
-    constructor(realm, privateIdentity, publicIdentity, password, displayName, websocket_proxy_url, audioElement){             
+    constructor(realm, privateIdentity, publicIdentity, password, displayName, websocket_proxy_url, audioElement){
         this._init(realm, privateIdentity, publicIdentity, password, displayName, websocket_proxy_url);
         this._audioRemoteElement = audioElement;
+
+        this._incomingCallCallback = null;
     }
 
     /*
@@ -23,6 +25,10 @@ class SIPCommunication {
 
     acceptCall() {
         this.incomingCallSession.accept();
+    }
+
+    registerIncomingCallCallback(callback) {
+        this._incomingCallCallback = callback;
     }
 
     /*
@@ -74,15 +80,15 @@ class SIPCommunication {
      */
     _stackEventsListener(event) {
         console.log('Stack Event.', event.type);
-        if(event.type == 'started'){        
+        if(event.type == 'started'){
             this._login();
         }
-        else if(event.type == 'i_new_call'){ 
+        else if(event.type == 'i_new_call'){
             // incoming audio/video call
             this.incomingCallSession = event.newSession;
             this.incomingCallSession.setConfiguration({
                 audio_remote:  this._audioRemoteElement,
-                events_listener: { events: '*', listener: (e) => this._callEventsListener(e)},           
+                events_listener: { events: '*', listener: (e) => this._callEventsListener(e)},
             });
             if(this.onCallIncoming){
                 this.onCallIncoming();
