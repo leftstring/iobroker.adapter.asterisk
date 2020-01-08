@@ -15,7 +15,7 @@ declare global {
 			asteriskPassword: string;
 			asteriskPublicIdentity: string;
 			asteriskRealm: string;
-			// websocketProxyUrl: string;
+			websocketProxyUrl: string;
 		}
 	}
 }

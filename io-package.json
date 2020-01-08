@@ -62,7 +62,8 @@
 		"asteriskPrivateIdentity":"",
 		"asteriskPassword": "",
 		"asteriskPublicIdentity": "",
-		"asteriskRealm": ""
+		"asteriskRealm": "",
+//		"websocketProxyUrl": ""
 	},
 	"objects": [],
 	"instanceObjects": []
