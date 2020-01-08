@@ -16,6 +16,7 @@ vis.binds.asterbird = {
 			audioElement.volume = 0.5;
 
 			const astersikConfJSON = vis.states[vis.binds.asterbird.adapterInstance + ".config.val"];
+			console.log("Asterisk Conf JSON: ", astersikConfJSON);
 			const astersikConf = JSON.parse(astersikConfJSON);
 
 			const realm = astersikConf.asteriskRealm;
