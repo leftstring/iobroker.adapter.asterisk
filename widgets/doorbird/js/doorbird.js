@@ -8,9 +8,11 @@ vis.binds.asterbird = {
 	version: "0.9.0",
     init: function (adapterInstance) {
 		vis.binds.asterbird.adapterInstance = adapterInstance;
+		console.log("Passed init method");
 	},
 	initSIP: function(audioElement) {
 		vis.conn.getStates(null, (error, data) => {
+			console.log("Start initSIP method");
 			vis.updateStates(data);
 
 			audioElement.volume = 0.5;
@@ -29,6 +31,7 @@ vis.binds.asterbird = {
 			sipCommunication = new SIPCommunication(realm, privateIdentity, publicIdentity, password, displayName, websocket_proxy_url, audioElement);
 			sipCommunication.onCallIncoming = vis.binds.asterbird.onCallIncoming;
 			sipCommunication.onCallTerminated = vis.binds.asterbird.onCallTerminated;
+			console.log("Passed initSIP method");
 		});
 	},
 	onCallIncoming: function() {
