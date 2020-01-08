@@ -30,7 +30,7 @@ class DoorbirdAdapter extends utils.Adapter {
 	public constructor(options: Partial<ioBroker.AdapterOptions> = {}) {
 		super({
 			...options,
-			name: "doorbird",
+			name: "asterbird",
 		});
 		this.on("ready", this.onReady.bind(this));
 		this.on("objectChange", this.onObjectChange.bind(this));

@@ -4,10 +4,10 @@ let sipCommunication;
 
 console.log("start widget");
 
-vis.binds.doorbird = {
+vis.binds.asterbird = {
 	version: "0.9.0",
     init: function (adapterInstance, adapterWidget) {
-		vis.binds.doorbird.adapterInstance = adapterInstance;
+		vis.binds.asterbird.adapterInstance = adapterInstance;
 	},
 	initSIP: function(audioElement) {
 		vis.conn.getStates(null, (error, data) => {
@@ -15,7 +15,7 @@ vis.binds.doorbird = {
 
 			audioElement.volume = 0.5;
 
-			const astersikConfJSON = vis.states[vis.binds.doorbird.adapterInstance + ".config.val"];
+			const astersikConfJSON = vis.states[vis.binds.asterbird.adapterInstance + ".config.val"];
 			const astersikConf = JSON.parse(astersikConfJSON);
 
 			const realm = astersikConf.asteriskRealm;
@@ -27,24 +27,24 @@ vis.binds.doorbird = {
 			// const websocket_proxy_url = astersikConf.websocketProxyUrl;
 
 			sipCommunication = new SIPCommunication(realm, privateIdentity, publicIdentity, password, displayName, websocket_proxy_url, audioElement);
-			sipCommunication.onCallIncoming = vis.binds.doorbird.onCallIncoming;
-			sipCommunication.onCallTerminated = vis.binds.doorbird.onCallTerminated;
+			sipCommunication.onCallIncoming = vis.binds.asterbird.onCallIncoming;
+			sipCommunication.onCallTerminated = vis.binds.asterbird.onCallTerminated;
 		});
 	},
 	onCallIncoming: function() {
 		console.log("call incoming");
 		var videoElement = document.getElementById("videoElement");
-		vis.binds.doorbird.intervall = setInterval(()=> {
+		vis.binds.asterbird.intervall = setInterval(()=> {
 			console.log("update preview image");
 			videoElement.src = undefined;
-			videoElement.src = vis.states[vis.binds.doorbird.adapterInstance + ".imageSource.val"];
+			videoElement.src = vis.states[vis.binds.asterbird.adapterInstance + ".imageSource.val"];
 		}, 1000)
 	},
 	onCallTerminated: function() {
 		console.log("call terminated");
-		if(vis.binds.doorbird.intervall) {
-			clearInterval(vis.binds.doorbird.intervall);
-		 	vis.binds.doorbird.intervall = undefined;
+		if(vis.binds.asterbird.intervall) {
+			clearInterval(vis.binds.asterbird.intervall);
+		 	vis.binds.asterbird.intervall = undefined;
 		}
 		var videoElement = document.getElementById("videoElement");
 		videoElement.src = undefined;
@@ -53,16 +53,16 @@ vis.binds.doorbird = {
 		console.log("accept call");
 		sipCommunication.acceptCall();
 		console.log("show video stream");
-		if(vis.binds.doorbird.intervall) {
-			clearInterval(vis.binds.doorbird.intervall);
-		 	vis.binds.doorbird.intervall = undefined;
+		if(vis.binds.asterbird.intervall) {
+			clearInterval(vis.binds.asterbird.intervall);
+		 	vis.binds.asterbird.intervall = undefined;
 		}
 		var videoElement = document.getElementById("videoElement");
-		videoElement.src = vis.states[vis.binds.doorbird.adapterInstance + ".videoSource.val"];
+		videoElement.src = vis.states[vis.binds.asterbird.adapterInstance + ".videoSource.val"];
 	},
 	openDoor: function() {
 		console.log("open door");
-		vis.setValue(vis.binds.doorbird.adapterInstance + ".openDoorRequested", true);
+		vis.setValue(vis.binds.asterbird.adapterInstance + ".openDoorRequested", true);
 	},
 	volumeDown: function() {
 		console.log("volume down");
