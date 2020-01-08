@@ -26,7 +26,8 @@ vis.binds.asterbird = {
 			const publicIdentity = astersikConf.asteriskPublicIdentity;
 			const password = astersikConf.asteriskPassword;
 			const displayName = 'ioBroker Doorbird Adapter';
-			const websocket_proxy_url = astersikConf.websocketProxyUrl;
+			const websocket_proxy_url = "wss://192.168.178.41:8089/ws";
+			// const websocket_proxy_url = astersikConf.websocketProxyUrl;
 
 			sipCommunication = new SIPCommunication(realm, privateIdentity, publicIdentity, password, displayName, websocket_proxy_url, audioElement);
 			sipCommunication.onCallIncoming = vis.binds.asterbird.onCallIncoming;
