@@ -15,6 +15,7 @@ declare global {
 			asteriskPassword: string;
 			asteriskPublicIdentity: string;
 			asteriskRealm: string;
+			websocketProxyUrl: string;
 		}
 	}
 }
@@ -47,7 +48,7 @@ class DoorbirdAdapter extends utils.Adapter {
 
 		await this.setStateAsync(DoorbirdAdapter.CONFIG_VAR, {val: JSON.stringify(this.config)});
 
-		var auth = "?http-user=" + this.config.username + "&http-password=" + this.config.password;	
+		var auth = "?http-user=" + this.config.username + "&http-password=" + this.config.password;
 		await this.setStateAsync(DoorbirdAdapter.IMAGE_SOURCE_VAR, "http://" + this.config.ipAddress + "/bha-api/image.cgi" + auth);
 		await this.setStateAsync(DoorbirdAdapter.VIDEO_SOURCE_VAR, "http://" + this.config.ipAddress + "/bha-api/video.cgi" + auth);
 	}
@@ -64,7 +65,7 @@ class DoorbirdAdapter extends utils.Adapter {
 			},
 			native: {},
 		});
-		
+
 		await this.setObjectAsync(DoorbirdAdapter.OPEN_DOOR_REQUESTED_VAR, {
 			type: "state",
 			common: {
@@ -150,8 +151,8 @@ class DoorbirdAdapter extends utils.Adapter {
 		return this.name + "." + this.instance + "." + variableName;
 	}
 
-	private async openDoor(): Promise<void> {		
-		this.log.info("Open door");		
+	private async openDoor(): Promise<void> {
+		this.log.info("Open door");
 		await this.sendRequestToDoorbird("GET", "/bha-api/open-door.cgi");
 		await this.setStateAsync("openDoorRequested", false);
 	}

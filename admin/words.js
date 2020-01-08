@@ -25,9 +25,13 @@ systemDictionary = {
     "asteriskRealm": {
         "en": "Asterisk Realm",
         "de": "Asterisk Realm"
-    },    
+    },
     "asteriskPassword": {
         "en": "Asterisk Password",
         "de": "Asterisk Passwort"
+    },
+    "websocketProxyUrl": {
+        "en": "websocket proxy url",
+        "de": "Websocket pPoxy Url"
     },
 };
