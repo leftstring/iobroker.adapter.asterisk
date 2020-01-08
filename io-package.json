@@ -1,6 +1,6 @@
 {
 	"common": {
-		"name": "doorbird",
+		"name": "asterisk doorbird",
 		"version": "0.9.0",
 		"news": {
 			"0.9.0": {
@@ -27,7 +27,7 @@
 		"main": "build/main.js",
 		"icon": "icon.png",
 		"enabled": true,
-		"readme": "https://github.com/Author/ioBroker.template/blob/master/README.md",
+		"readme": "https://github.com/leftstring/iobroker.adapter.asteriskREADME.md",
 		"loglevel": "info",
 		"restartAdapters": [
 			"vis"
