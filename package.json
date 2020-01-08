@@ -1,5 +1,5 @@
 {
-  "name": "iobroker.doorbird",
+  "name": "iobroker.adapter.asterisk",
   "version": "0.9.1",
   "description": "Template for adapter development",
   "author": {
