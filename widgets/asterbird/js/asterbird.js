@@ -22,6 +22,8 @@ vis.binds.asterbird = {
 		}
 
 		console.log("Passed init method");
+		console.log("Passed init method");
+		console.log("Passed init method");
 	},
 	initSIP: function(audioElement) {
 		vis.conn.getStates(null, (error, data) => {
