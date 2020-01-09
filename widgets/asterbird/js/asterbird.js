@@ -18,16 +18,31 @@ vis.binds.asterbird = {
 			audioElement.volume = 0.5;
 
 			const astersikConfJSON = vis.states[vis.binds.asterbird.adapterInstance + ".config.val"];
-			console.log("Asterisk Conf JSON: ", astersikConfJSON);
 			const astersikConf = JSON.parse(astersikConfJSON);
 
 			const realm = astersikConf.asteriskRealm;
-			const privateIdentity = astersikConf.asteriskPrivateIdentity;
-			const publicIdentity = astersikConf.asteriskPublicIdentity;
-			const password = astersikConf.asteriskPassword;
-			const displayName = 'ioBroker Doorbird Adapter';
-			const websocket_proxy_url = "wss://192.168.178.41:8089/ws";
-			// const websocket_proxy_url = astersikConf.websocketProxyUrl;
+			const websocket_proxy_url = astersikConf.websocketProxyUrl;
+
+			const sipCommunicationAccount = new SIPCommunicationAccount();
+
+			let privateIdentity = null;
+			let publicIdentity = null;
+			let password = null;
+			let displayName = null;
+
+			if(sipCommunicationAccount.IsCorrectInitialized()){
+				privateIdentity = sipCommunicationAccount.PrivateIdentity;
+				publicIdentity = sipCommunicationAccount.PublicIdentity;
+				password = sipCommunicationAccount.Password;
+				displayName = sipCommunicationAccount.DisplayName;
+			} else {
+				const privateIdentity = astersikConf.asteriskPrivateIdentity;
+				const publicIdentity = astersikConf.asteriskPublicIdentity;
+				const password = astersikConf.asteriskPassword;
+				const displayName = 'ioBroker Doorbird Adapter';
+
+				sipCommunicationAccount.setAccountData(privateIdentity, publicIdentity, password, displayName);
+			}
 
 			sipCommunication = new SIPCommunication(realm, privateIdentity, publicIdentity, password, displayName, websocket_proxy_url, audioElement);
 			sipCommunication.onCallIncoming = vis.binds.asterbird.onCallIncoming;
