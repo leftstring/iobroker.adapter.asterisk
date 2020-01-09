@@ -11,6 +11,7 @@ vis.binds.asterbird = {
 
 		if(!vis.editMode){
 			console.log("Widget ID: ", widgetId);
+			console.log("Widget ID length: ", widgetId.length());
 			const elmentx = document.getElementById(widgetId);
 			vis.binds.asterbird.widgetElement = elmentx;
 			console.log("Widget elment: ", vis.binds.asterbird.widgetElement);
