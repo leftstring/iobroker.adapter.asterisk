@@ -41,18 +41,13 @@
 	</div>
 	<dialog id="accountDataDialog">
       <form method="dialog">
-        <section>
-          <p><label for="favAnimal">Favorite animal:</label>
-          <select id="favAnimal" name="favAnimal">
-            <option></option>
-            <option>Brine shrimp</option>
-            <option>Red panda</option>
-            <option>Spider monkey</option>
-          </select></p>
-        </section>
+        <input id="accountDataDialogPrivateIdentity"/>
+        <input id="accountDataDialogPublicIdentity"/>
+        <input id="accountDataDialogPassword"/>
+        <input id="accountDataDialogDisplayName"/>
         <menu>
-          <button id="cancel" type="reset">Cancel</button>
-          <button type="submit">Confirm</button>
+          <button id="cancel">Cancel</button>
+          <button id="confirm">Confirm</button>
         </menu>
       </form>
     </dialog>

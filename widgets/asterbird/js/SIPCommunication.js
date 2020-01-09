@@ -1,7 +1,7 @@
 class SIPCommunication {
 
-    constructor(realm, privateIdentity, publicIdentity, password, displayName, websocket_proxy_url, audioElement){
-        this._init(realm, privateIdentity, publicIdentity, password, displayName, websocket_proxy_url);
+    constructor(realm,sipCommunicationAccount, websocket_proxy_url, audioElement){
+        this._init(realm, sipCommunicationAccount.PrivateIdentity, sipCommunicationAccount.PublicIdentity, sipCommunicationAccount.Password, sipCommunicationAccount.DisplayName, websocket_proxy_url);
         this._audioRemoteElement = audioElement;
 
         this._incomingCallCallback = null;

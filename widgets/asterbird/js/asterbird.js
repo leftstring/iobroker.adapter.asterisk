@@ -1,6 +1,7 @@
 "use strict";
 
 let sipCommunication;
+let sipCommunicationAccount
 
 console.log("start widget");
 
@@ -25,32 +26,16 @@ vis.binds.asterbird = {
 				const realm = astersikConf.asteriskRealm;
 				const websocket_proxy_url = astersikConf.websocketProxyUrl;
 
-				const sipCommunicationAccount = new SIPCommunicationAccount();
-
-				let privateIdentity = null;
-				let publicIdentity = null;
-				let password = null;
-				let displayName = null;
+				sipCommunicationAccount = new SIPCommunicationAccount();
 
 				if (sipCommunicationAccount.IsCorrectInitialized()) {
-					privateIdentity = sipCommunicationAccount.PrivateIdentity;
-					publicIdentity = sipCommunicationAccount.PublicIdentity;
-					password = sipCommunicationAccount.Password;
-					displayName = sipCommunicationAccount.DisplayName;
+                    sipCommunication = new SIPCommunication(realm, sipCommunicationAccount, websocket_proxy_url, audioElement);
+                    sipCommunication.onCallIncoming = vis.binds.asterbird.onCallIncoming;
+                    sipCommunication.onCallTerminated = vis.binds.asterbird.onCallTerminated;
 				} else {
-					const privateIdentity = astersikConf.asteriskPrivateIdentity;
-					const publicIdentity = astersikConf.asteriskPublicIdentity;
-					const password = astersikConf.asteriskPassword;
-					const displayName = 'ioBroker Doorbird Adapter';
-
-					vis.binds.asterbird.requestAsteriskAccountData();
-
-					sipCommunicationAccount.setAccountData(privateIdentity, publicIdentity, password, displayName);
+					vis.binds.asterbird.requestAsteriskAccountData(realm, websocket_proxy_url, audioElement);
 				}
 
-				sipCommunication = new SIPCommunication(realm, privateIdentity, publicIdentity, password, displayName, websocket_proxy_url, audioElement);
-				sipCommunication.onCallIncoming = vis.binds.asterbird.onCallIncoming;
-				sipCommunication.onCallTerminated = vis.binds.asterbird.onCallTerminated;
 				console.log("Passed initSIP method");
 			});
 		}
@@ -122,10 +107,38 @@ vis.binds.asterbird = {
 		var volumeSlider = document.getElementById("volume-slider");
 		audioElement.volume = volumeSlider.value;
 	},
-	requestAsteriskAccountData: function () {
+	requestAsteriskAccountData: function (realm, websocket_proxy_url, audioElement) {
 		console.log("Open dialog for asterisk account data.")
 		const accountDataDialog = document.getElementById("accountDataDialog");
+        var cancelButton = document.getElementById('cancel');
+        var confirmButton = document.getElementById('confirm');
+
+        cancelButton.addEventListener('click', function() {
+            accountDataDialog.close();
+        });
+
+        confirmButton.addEventListener('click', function() {
+            vis.binds.asterbird.onAccountDataDialogSubmit(realm, websocket_proxy_url, audioElement);
+            accountDataDialog.close();
+        });
 
 		accountDataDialog.showModal();
-	}
+	},
+    onAccountDataDialogSubmit(realm, websocket_proxy_url, audioElement){
+        const privateIdentityElement = document.getElementById("accountDataDialogPrivateIdentity");
+        const publicIdentityElement = document.getElementById("accountDataDialogPublicIdentity");
+        const passwordElement = document.getElementById("accountDataDialogPassword");
+        const displayNameElement = document.getElementById("accountDataDialogDisplayName");
+
+        const privateIdentity = privateIdentityElement.value;
+        const publicIdentity = publicIdentityElement.value;
+        const password = passwordElement.value;
+        const displayName = displayNameElement.value;
+
+        sipCommunicationAccount.setAccountData(privateIdentity, publicIdentity, password, displayName);
+
+        sipCommunication = new SIPCommunication(realm, sipCommunicationAccount, websocket_proxy_url, audioElement);
+        sipCommunication.onCallIncoming = vis.binds.asterbird.onCallIncoming;
+        sipCommunication.onCallTerminated = vis.binds.asterbird.onCallTerminated;
+    }
 };
