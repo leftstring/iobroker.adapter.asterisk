@@ -72,6 +72,9 @@ vis.binds.asterbird = {
 	},
 	onCallTerminated: function() {
 		console.log("call terminated");
+
+		vis.binds.asterbird.widgetElement.style.visibility = "hidden";
+
 		if(vis.binds.asterbird.intervall) {
 			clearInterval(vis.binds.asterbird.intervall);
 		 	vis.binds.asterbird.intervall = undefined;
