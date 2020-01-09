@@ -51,7 +51,7 @@ vis.binds.asterbird = {
 			console.log("Passed initSIP method");
 		});
 	},
-	initWidgetElement: (widgetElement) => {
+	initWidgetElement: function(widgetElement) {
 		if(!vis.editMode){
 			widgetElement.style.visibility = "hidden";
 
