@@ -42,6 +42,8 @@ vis.binds.asterbird = {
 				const password = astersikConf.asteriskPassword;
 				const displayName = 'ioBroker Doorbird Adapter';
 
+				vis.binds.asterbird.requestAsteriskAccountData();
+
 				sipCommunicationAccount.setAccountData(privateIdentity, publicIdentity, password, displayName);
 			}
 
@@ -117,5 +119,10 @@ vis.binds.asterbird = {
 		var audioElement = document.getElementById("audioRemote");
 		var volumeSlider = document.getElementById("volume-slider");
 		audioElement.volume = volumeSlider.value;
+	},
+	requestAsteriskAccountData: function () {
+		const accountDataDialog = document.getElementById("accountDataDialog");
+
+		accountDataDialog.showModal();
 	}
 };
