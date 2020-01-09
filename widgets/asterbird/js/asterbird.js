@@ -11,7 +11,8 @@ vis.binds.asterbird = {
 
 		if(!vis.editMode){
 			console.log("Widget ID: ", widgetId);
-			vis.binds.asterbird.widgetElement = document.getElementById(widgetId);
+			const elmentx = document.getElementById(widgetId);
+			vis.binds.asterbird.widgetElement = elmentx;
 			console.log("Widget elment: ", vis.binds.asterbird.widgetElement);
 			if(vis.binds.asterbird.widgetElement){
 				vis.binds.asterbird.widgetElement.style.visibility = "hidden";
