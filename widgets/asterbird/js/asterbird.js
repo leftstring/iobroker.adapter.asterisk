@@ -10,10 +10,12 @@ vis.binds.asterbird = {
 		vis.binds.asterbird.adapterInstance = adapterInstance;
 
 		if(!vis.editMode){
+			console.log("Widget ID: ", widgetId);
 			vis.binds.asterbird.widgetElement = document.getElementById(widgetId);
-
+			console.log("Widget elment: ", vis.binds.asterbird.widgetElement);
 			if(vis.binds.asterbird.widgetElement){
 				vis.binds.asterbird.widgetElement.style.visibility = "hidden";
+				console.log("Visibility of Elment: ", vis.binds.asterbird.widgetElement.style.visibility);
 			}
 		}
 
