@@ -6,8 +6,9 @@ console.log("start widget");
 
 vis.binds.asterbird = {
 	version: "0.9.0",
-    init: function (adapterInstance) {
+    init: function (adapterInstance, widgetId) {
 		vis.binds.asterbird.adapterInstance = adapterInstance;
+		console.log("Widget ID: ", widgetId);
 		console.log("Passed init method");
 	},
 	initSIP: function(audioElement) {
