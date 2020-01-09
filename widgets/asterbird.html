@@ -7,7 +7,7 @@
 <script type="text/javascript" src="widgets/asterbird/js/asterbird.js"></script>
 
 <script id="tplAsterbirdWidget" type="text/ejs" class="vis-tpl" data-vis-prev='' data-vis-set="asterbird" data-vis-type="widget" data-vis-name="Asterbird" data-vis-attrs="adapterInstance/id;">
-	<div class="vis-widget <%== this.data.attr('class') %>" style="width:200px; height:200px;" id="<%= this.data.attr('wid') %>">
+	<div class="vis-widget <%== this.data.attr('class') %>" style="width:200px; height:200px;" id="<%= this.data.attr('wid') %>" <%= function(element) {  vis.binds.asterbird.initWidgetElement(element); } %>>
         <div class="widget-container vis-widget-body <%== this.data.attr('class') %>">
             <h1 class="header">Türklingel</h1>
             <div class="video-container">
@@ -39,5 +39,5 @@
             </div>
 		</div>
 	</div>
-	<% vis.binds.asterbird.init(this.data.adapterInstance, this.data.attr('wid'));  %>
+	<% vis.binds.asterbird.init(this.data.adapterInstance);  %>
 </script>

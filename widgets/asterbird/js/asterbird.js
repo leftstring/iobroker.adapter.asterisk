@@ -6,23 +6,9 @@ console.log("start widget");
 
 vis.binds.asterbird = {
 	version: "0.9.0",
-    init: function (adapterInstance, widgetId) {
+    init: function (adapterInstance) {
 		vis.binds.asterbird.adapterInstance = adapterInstance;
 
-		if(!vis.editMode){
-			console.log("Widget ID: ", widgetId);
-			console.log("Widget ID length: ", widgetId.length);
-			const elmentx = document.getElementById(widgetId);
-			vis.binds.asterbird.widgetElement = elmentx;
-			console.log("Widget elment: ", vis.binds.asterbird.widgetElement);
-			if(vis.binds.asterbird.widgetElement){
-				vis.binds.asterbird.widgetElement.style.visibility = "hidden";
-				console.log("Visibility of Elment: ", vis.binds.asterbird.widgetElement.style.visibility);
-			}
-		}
-
-		console.log("Passed init method");
-		console.log("Passed init method");
 		console.log("Passed init method");
 	},
 	initSIP: function(audioElement) {
@@ -64,6 +50,13 @@ vis.binds.asterbird = {
 			sipCommunication.onCallTerminated = vis.binds.asterbird.onCallTerminated;
 			console.log("Passed initSIP method");
 		});
+	},
+	initWidgetElement: (widgetElement) => {
+		if(!vis.editMode){
+			widgetElement.style.visibility = "hidden";
+
+			vis.binds.asterbird.widgetElement = widgetElement;
+		}
 	},
 	onCallIncoming: function() {
 		console.log("call incoming");
