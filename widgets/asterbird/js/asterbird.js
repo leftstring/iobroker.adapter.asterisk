@@ -8,7 +8,8 @@ vis.binds.asterbird = {
 	version: "0.9.0",
     init: function (adapterInstance, widgetId) {
 		vis.binds.asterbird.adapterInstance = adapterInstance;
-		console.log("Widget ID: ", widgetId);
+        vis.binds.asterbird.widgetElement = document.getElementById(widgetId);
+        vis.binds.asterbird.widgetElement.style.visibility = "hidden";
 		console.log("Passed init method");
 	},
 	initSIP: function(audioElement) {
