@@ -9,12 +9,12 @@ vis.binds.asterbird = {
     init: function (adapterInstance, widgetId) {
 		vis.binds.asterbird.adapterInstance = adapterInstance;
 
-		console.log("Widget ID: ", widgetId);
-		vis.binds.asterbird.widgetElement = document.getElementById(widgetId);
+		if(!vis.editMode){
+			vis.binds.asterbird.widgetElement = document.getElementById(widgetId);
 
-        if(vis.binds.asterbird.widgetElement){
-			vis.binds.asterbird.widgetElement.style.visibility = "hidden";
-			console.log("Visibility of Elment: ", vis.binds.asterbird.widgetElement.style.visibility);
+			if(vis.binds.asterbird.widgetElement){
+				vis.binds.asterbird.widgetElement.style.visibility = "hidden";
+			}
 		}
 
 		console.log("Passed init method");
