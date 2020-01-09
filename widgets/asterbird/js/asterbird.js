@@ -8,9 +8,15 @@ vis.binds.asterbird = {
 	version: "0.9.0",
     init: function (adapterInstance, widgetId) {
 		vis.binds.asterbird.adapterInstance = adapterInstance;
-        vis.binds.asterbird.widgetElement = document.getElementById(widgetId);
-        // vis.binds.asterbird.widgetElement.style.visibility = "hidden";
-		console.log("Visibility of Elment: ", vis.binds.asterbird.widgetElement.style.visibility);
+
+		console.log("Widget ID: ", widgetId);
+		vis.binds.asterbird.widgetElement = document.getElementById(widgetId);
+
+        if(vis.binds.asterbird.widgetElement){
+			vis.binds.asterbird.widgetElement.style.visibility = "hidden";
+			console.log("Visibility of Elment: ", vis.binds.asterbird.widgetElement.style.visibility);
+		}
+
 		console.log("Passed init method");
 	},
 	initSIP: function(audioElement) {
