@@ -59,9 +59,6 @@
 		"ipAddress": "",
 		"username": "",
 		"password": "",
-		"asteriskPrivateIdentity":"",
-		"asteriskPassword": "",
-		"asteriskPublicIdentity": "",
 		"asteriskRealm": "",
 		"websocketProxyUrl": ""
 	},

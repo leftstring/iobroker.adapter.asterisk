@@ -11,9 +11,6 @@ declare global {
 			ipAddress: string;
 			username: string;
 			password: string;
-			asteriskPrivateIdentity: string;
-			asteriskPassword: string;
-			asteriskPublicIdentity: string;
 			asteriskRealm: string;
 			websocketProxyUrl: string;
 		}
