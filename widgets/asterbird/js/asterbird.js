@@ -12,46 +12,48 @@ vis.binds.asterbird = {
 		console.log("Passed init method");
 	},
 	initSIP: function(audioElement) {
-		vis.conn.getStates(null, (error, data) => {
-			console.log("Start initSIP method");
-			vis.updateStates(data);
+		if(!vis.editMode) {
+			vis.conn.getStates(null, (error, data) => {
+				console.log("Start initSIP method");
+				vis.updateStates(data);
 
-			audioElement.volume = 0.5;
+				audioElement.volume = 0.5;
 
-			const astersikConfJSON = vis.states[vis.binds.asterbird.adapterInstance + ".config.val"];
-			const astersikConf = JSON.parse(astersikConfJSON);
+				const astersikConfJSON = vis.states[vis.binds.asterbird.adapterInstance + ".config.val"];
+				const astersikConf = JSON.parse(astersikConfJSON);
 
-			const realm = astersikConf.asteriskRealm;
-			const websocket_proxy_url = astersikConf.websocketProxyUrl;
+				const realm = astersikConf.asteriskRealm;
+				const websocket_proxy_url = astersikConf.websocketProxyUrl;
 
-			const sipCommunicationAccount = new SIPCommunicationAccount();
+				const sipCommunicationAccount = new SIPCommunicationAccount();
 
-			let privateIdentity = null;
-			let publicIdentity = null;
-			let password = null;
-			let displayName = null;
+				let privateIdentity = null;
+				let publicIdentity = null;
+				let password = null;
+				let displayName = null;
 
-			if(sipCommunicationAccount.IsCorrectInitialized()){
-				privateIdentity = sipCommunicationAccount.PrivateIdentity;
-				publicIdentity = sipCommunicationAccount.PublicIdentity;
-				password = sipCommunicationAccount.Password;
-				displayName = sipCommunicationAccount.DisplayName;
-			} else {
-				const privateIdentity = astersikConf.asteriskPrivateIdentity;
-				const publicIdentity = astersikConf.asteriskPublicIdentity;
-				const password = astersikConf.asteriskPassword;
-				const displayName = 'ioBroker Doorbird Adapter';
+				if (sipCommunicationAccount.IsCorrectInitialized()) {
+					privateIdentity = sipCommunicationAccount.PrivateIdentity;
+					publicIdentity = sipCommunicationAccount.PublicIdentity;
+					password = sipCommunicationAccount.Password;
+					displayName = sipCommunicationAccount.DisplayName;
+				} else {
+					const privateIdentity = astersikConf.asteriskPrivateIdentity;
+					const publicIdentity = astersikConf.asteriskPublicIdentity;
+					const password = astersikConf.asteriskPassword;
+					const displayName = 'ioBroker Doorbird Adapter';
 
-				vis.binds.asterbird.requestAsteriskAccountData();
+					vis.binds.asterbird.requestAsteriskAccountData();
 
-				sipCommunicationAccount.setAccountData(privateIdentity, publicIdentity, password, displayName);
-			}
+					sipCommunicationAccount.setAccountData(privateIdentity, publicIdentity, password, displayName);
+				}
 
-			sipCommunication = new SIPCommunication(realm, privateIdentity, publicIdentity, password, displayName, websocket_proxy_url, audioElement);
-			sipCommunication.onCallIncoming = vis.binds.asterbird.onCallIncoming;
-			sipCommunication.onCallTerminated = vis.binds.asterbird.onCallTerminated;
-			console.log("Passed initSIP method");
-		});
+				sipCommunication = new SIPCommunication(realm, privateIdentity, publicIdentity, password, displayName, websocket_proxy_url, audioElement);
+				sipCommunication.onCallIncoming = vis.binds.asterbird.onCallIncoming;
+				sipCommunication.onCallTerminated = vis.binds.asterbird.onCallTerminated;
+				console.log("Passed initSIP method");
+			});
+		}
 	},
 	initWidgetElement: function(widgetElement) {
 		if(!vis.editMode){
@@ -121,6 +123,7 @@ vis.binds.asterbird = {
 		audioElement.volume = volumeSlider.value;
 	},
 	requestAsteriskAccountData: function () {
+		console.log("Open dialog for asterisk account data.")
 		const accountDataDialog = document.getElementById("accountDataDialog");
 
 		accountDataDialog.showModal();
