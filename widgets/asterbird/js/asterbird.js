@@ -10,6 +10,7 @@ vis.binds.asterbird = {
 		vis.binds.asterbird.adapterInstance = adapterInstance;
         vis.binds.asterbird.widgetElement = document.getElementById(widgetId);
         vis.binds.asterbird.widgetElement.style.visibility = "hidden";
+		console.log("Visibility of Elment: ", vis.binds.asterbird.widgetElement.style.visibility);
 		console.log("Passed init method");
 	},
 	initSIP: function(audioElement) {
