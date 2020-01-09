@@ -60,6 +60,9 @@ vis.binds.asterbird = {
 	},
 	onCallIncoming: function() {
 		console.log("call incoming");
+
+		vis.binds.asterbird.widgetElement.style.visibility = "visible";
+
 		var videoElement = document.getElementById("videoElement");
 		vis.binds.asterbird.intervall = setInterval(()=> {
 			console.log("update preview image");
