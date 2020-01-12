@@ -1,6 +1,6 @@
 {
 	"common": {
-		"name": "asterbird",
+		"name": "iobroker.asterbird",
 		"version": "0.9.0",
 		"news": {
 			"0.9.0": {
@@ -57,6 +57,7 @@
 	},
 	"native": {
 		"ipAddress": "",
+		"doorRelay": "",
 		"username": "",
 		"password": "",
 		"asteriskRealm": "",

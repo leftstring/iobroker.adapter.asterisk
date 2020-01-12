@@ -2,6 +2,14 @@
 "use strict";
 
 systemDictionary = {
+    "ipAddress": {
+        "en": "Doorbird IP Address",
+        "de": "Doorbird IP-Adresse"
+    },
+    "doorRelay": {
+        "en": "Door Relay",
+        "de": "Tür Relay"
+    },
     "username": {
         "en": "Doorbird Username",
         "de": "Doorbird Benutzername"
@@ -9,29 +17,13 @@ systemDictionary = {
     "password": {
         "en": "Doorbird Password",
         "de": "Doorbird Passwort"
-    },
-    "ipAddress": {
-        "en": "Doorbird IP Address",
-        "de": "Doorbird IP-Adresse"
-    },
-    "asteriskPrivateIdentity": {
-        "en": "Asterisk Private Identity",
-        "de": "Asterisk Pirvate Identität"
-    },
-    "asteriskPublicIdentity": {
-        "en": "Asterisk Public Identity",
-        "de": "Asterisk Öffentliche Identität"
+    },  
+   "websocketProxyUrl": {
+        "en": "Websocket Proxy URL",
+        "de": "Websocket Poxy URL"
     },
     "asteriskRealm": {
-        "en": "Asterisk Realm",
-        "de": "Asterisk Realm"
-    },
-    "asteriskPassword": {
-        "en": "Asterisk Password",
-        "de": "Asterisk Passwort"
-    },
-    "websocketProxyUrl": {
-        "en": "websocket proxy url",
-        "de": "Websocket pPoxy Url"
-    },
+        "en": "Realm",
+        "de": "Realm"
+    }
 };

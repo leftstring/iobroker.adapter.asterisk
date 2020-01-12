@@ -9,6 +9,7 @@ declare global {
 	namespace ioBroker {
 		interface AdapterConfig {
 			ipAddress: string;
+			doorRelay: string;
 			username: string;
 			password: string;
 			asteriskRealm: string;
@@ -150,14 +151,13 @@ class DoorbirdAdapter extends utils.Adapter {
 
 	private async openDoor(): Promise<void> {
 		this.log.info("Open door");
-		await this.sendRequestToDoorbird("GET", "/bha-api/open-door.cgi");
+		await this.sendRequestToDoorbird("GET", "/bha-api/open-door.cgi?r=" + this.config.doorRelay);
 		await this.setStateAsync("openDoorRequested", false);
 	}
 
 	private sendRequestToDoorbird(method: string, path: string): Promise<Buffer> {
 		var auth = "?http-user="+ this.config.username + "&http-password=" + this.config.password
 		var options: http.RequestOptions = { method: method, host: this.config.ipAddress, path: path + auth }
-		// TODO user "Authorization" header with "Basic " + btoa("ghdggd0002:3pjUcjaUNA")
 		return new Promise((resolve, reject) => {
 			var request = http.request(options, (response) => {
 				var body: Buffer [] = [];
@@ -176,7 +176,6 @@ class DoorbirdAdapter extends utils.Adapter {
 			});
 			request.end();
 		});
-
 	}
 
 }
