@@ -90,7 +90,7 @@ vis.binds.asterbird = {
 		videoElement.src = vis.states[vis.binds.asterbird.adapterInstance + ".videoSource.val"];
 	},
     endCall: function() {
-		console.log("decline call");
+		console.log("end call");
 
 		if(vis.binds.asterbird.isInCall)
 		    sipCommunication.hangupCall();
