@@ -31,13 +31,13 @@ class SIPCommunication {
 
     rejectCall() {
         if (this.incomingCallSession) {
-            this.incomingCallSession.reject()();
+            this.incomingCallSession.reject();
         }
     }
 
     hangupCall() {
         if (this.incomingCallSession) {
-            this.incomingCallSession.hangup({ events_listener: { events: '*', listener: this._sessionEventsListener } });
+            this.incomingCallSession.hangup();
         }
     }
 
