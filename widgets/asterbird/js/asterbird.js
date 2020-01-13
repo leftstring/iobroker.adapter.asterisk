@@ -7,6 +7,8 @@ console.log("start widget");
 
 vis.binds.asterbird = {
 	version: "0.9.0",
+    isCallIncoming: false,
+    isInCall: false,
     init: function (adapterInstance) {
 		vis.binds.asterbird.adapterInstance = adapterInstance;
 
@@ -49,7 +51,7 @@ vis.binds.asterbird = {
 	},
 	onCallIncoming: function() {
 		console.log("call incoming");
-
+        vis.binds.asterbird.isCallIncoming = true;
 		vis.binds.asterbird.widgetElement.style.visibility = "visible";
 
 		var videoElement = document.getElementById("videoElement");
@@ -70,10 +72,15 @@ vis.binds.asterbird = {
 		}
 		var videoElement = document.getElementById("videoElement");
 		videoElement.src = undefined;
+
+        vis.binds.asterbird.isCallIncoming = false;
+        vis.binds.asterbird.isInCall = false;
 	},
 	acceptCall: function() {
 		console.log("accept call");
 		sipCommunication.acceptCall();
+        vis.binds.asterbird.isInCall = true;
+        vis.binds.asterbird.isCallIncoming = false;
 		console.log("show video stream");
 		if(vis.binds.asterbird.intervall) {
 			clearInterval(vis.binds.asterbird.intervall);
@@ -81,6 +88,17 @@ vis.binds.asterbird = {
 		}
 		var videoElement = document.getElementById("videoElement");
 		videoElement.src = vis.states[vis.binds.asterbird.adapterInstance + ".videoSource.val"];
+	},
+    endCall: function() {
+		console.log("decline call");
+
+		if(vis.binds.asterbird.isInCall)
+		    sipCommunication.hangupCall();
+
+        if(vis.binds.asterbird.isCallIncoming)
+		    sipCommunication.rejectCall();
+
+
 	},
 	openDoor: function() {
 		console.log("open door");

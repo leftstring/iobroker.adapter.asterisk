@@ -24,7 +24,21 @@ class SIPCommunication {
     }
 
     acceptCall() {
-        this.incomingCallSession.accept();
+        if (this.incomingCallSession) {
+            this.incomingCallSession.accept();
+        }
+    }
+
+    rejectCall() {
+        if (this.incomingCallSession) {
+            this.incomingCallSession.reject()();
+        }
+    }
+
+    hangupCall() {
+        if (this.incomingCallSession) {
+            this.incomingCallSession.hangup({ events_listener: { events: '*', listener: this._sessionEventsListener } });
+        }
     }
 
     registerIncomingCallCallback(callback) {
