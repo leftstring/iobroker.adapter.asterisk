@@ -31,9 +31,11 @@ vis.binds.asterbird = {
 				sipCommunicationAccount = new SIPCommunicationAccount();
 
 				if (sipCommunicationAccount.IsCorrectInitialized()) {
-                    sipCommunication = new SIPCommunication(realm, sipCommunicationAccount, websocket_proxy_url, audioElement);
-                    sipCommunication.onCallIncoming = vis.binds.asterbird.onCallIncoming;
-                    sipCommunication.onCallTerminated = vis.binds.asterbird.onCallTerminated;
+					if(!sipCommunication) {
+						sipCommunication = new SIPCommunication(realm, sipCommunicationAccount, websocket_proxy_url, audioElement);
+						sipCommunication.onCallIncoming = vis.binds.asterbird.onCallIncoming;
+						sipCommunication.onCallTerminated = vis.binds.asterbird.onCallTerminated;
+					}
 				} else {
 					vis.binds.asterbird.requestAsteriskAccountData(realm, websocket_proxy_url, audioElement);
 				}
