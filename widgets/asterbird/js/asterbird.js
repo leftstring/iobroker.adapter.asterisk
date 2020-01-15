@@ -14,8 +14,6 @@ vis.binds.asterbird = {
 
 		console.log("ASTERBIRD ","Passed init method");
 
-		document.getElementById("acceptCallBtn").disabled = true;
-		document.getElementById("endCallBtn").disabled = true;
 	},
 	initSIP: function(audioElement) {
 		if(!vis.editMode) {
@@ -65,6 +63,17 @@ vis.binds.asterbird = {
 			vis.binds.asterbird.widgetElement = widgetElement;
 		}
 	},
+	initAcceptCallBtn: function(element) {
+		if(!vis.editMode){
+			element.disabled = true;
+		}
+	},
+	initEndCallBtn: function(element) {
+		if(!vis.editMode){
+			element.disabled = true;
+		}
+	},
+
 	onCallIncoming: function() {
 		console.log("ASTERBIRD ","call incoming");
         vis.binds.asterbird.isCallIncoming = true;
