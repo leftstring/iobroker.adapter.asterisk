@@ -16,10 +16,12 @@ vis.binds.asterbird = {
 	},
 	initSIP: function(audioElement) {
 		if(!vis.editMode) {
-			var dps= ['asterbird.0.videoSource','asterbird.0.imageSource','asterbird.0.openDoorRequested','asterbird.0.config'];
+			console.log("ASTERBIRD ","Join initSIP method");
+			var dps= [vis.binds.asterbird.adapterInstance + '.videoSource',vis.binds.asterbird.adapterInstance + '.imageSource',vis.binds.asterbird.adapterInstance + '.openDoorRequested',vis.binds.asterbird.adapterInstance + '.config'];
 			vis.conn.getStates(dps, (error, data) => {
 				console.log("ASTERBIRD ","Start initSIP method");
 				vis.updateStates(data);
+				console.log("ASTERBIRD ","Updated states.");
 
 				audioElement.volume = 0.5;
 
