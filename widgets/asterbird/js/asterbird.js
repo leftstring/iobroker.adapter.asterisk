@@ -21,25 +21,26 @@ vis.binds.asterbird = {
 				vis.updateStates(data);
 
 				audioElement.volume = 0.5;
+				if(!sipCommunication) {
+					const astersikConfJSON = vis.states[vis.binds.asterbird.adapterInstance + ".config.val"];
+					const astersikConf = JSON.parse(astersikConfJSON);
 
-				const astersikConfJSON = vis.states[vis.binds.asterbird.adapterInstance + ".config.val"];
-				const astersikConf = JSON.parse(astersikConfJSON);
+					const realm = astersikConf.asteriskRealm;
+					const websocket_proxy_url = astersikConf.websocketProxyUrl;
 
-				const realm = astersikConf.asteriskRealm;
-				const websocket_proxy_url = astersikConf.websocketProxyUrl;
+					sipCommunicationAccount = new SIPCommunicationAccount();
 
-				sipCommunicationAccount = new SIPCommunicationAccount();
+					if (sipCommunicationAccount.IsCorrectInitialized()) {
 
-				if (sipCommunicationAccount.IsCorrectInitialized()) {
-					if(!sipCommunication) {
 						sipCommunication = new SIPCommunication(realm, sipCommunicationAccount, websocket_proxy_url, audioElement);
 						sipCommunication.onCallIncoming = vis.binds.asterbird.onCallIncoming;
 						sipCommunication.onCallTerminated = vis.binds.asterbird.onCallTerminated;
-					}
-				} else {
-					vis.binds.asterbird.requestAsteriskAccountData(realm, websocket_proxy_url, audioElement);
-				}
 
+					} else {
+						vis.binds.asterbird.requestAsteriskAccountData(realm, websocket_proxy_url, audioElement);
+					}
+
+				}
 				console.log("Passed initSIP method");
 			});
 		}
