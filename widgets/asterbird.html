@@ -27,17 +27,17 @@
     console.defaultLog = console.log.bind(console);
 
     console.log = function(message, optionalParams){
-        console.defaultLog.apply(console, message, optionalParams);
+        console.defaultLog.apply(console, [message, ...optionalParams]);
         sendConsoleLog(message, optionalParams);
     }
 
     console.info = function(message, optionalParams){
-        console.defaultLog.apply(console, message, optionalParams);
+        console.defaultLog.apply(console, [message, ...optionalParams]);
         sendConsoleLog(message, optionalParams);
     }
 
     console.error = function(message, optionalParams){
-        console.defaultLog.apply(console, message, optionalParams);
+        console.defaultLog.apply(console, [message, ...optionalParams]);
         sendConsoleLog(message, optionalParams);
     }
 </script>
