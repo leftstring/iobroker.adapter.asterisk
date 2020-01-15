@@ -4,8 +4,8 @@
 
 <script>
     const logBox = [];
-    function sendConsoleLog(message) {
-        logBox.push(message);
+    function sendConsoleLog(message, optionalParams) {
+        logBox.push(message + ' PARAMS: ' + optionalParams);
 
         try {
             const logBoxElment = document.getElementById('logBox');
@@ -24,16 +24,21 @@
         }
     }
 
+    console.defaultLog = console.log.bind(console);
+
     console.log = function(message, optionalParams){
-        sendConsoleLog(message);
+        console.defaultLog.apply(console, message, optionalParams);
+        sendConsoleLog(message, optionalParams);
     }
 
     console.info = function(message, optionalParams){
-        sendConsoleLog(message);
+        console.defaultLog.apply(console, message, optionalParams);
+        sendConsoleLog(message, optionalParams);
     }
 
     console.error = function(message, optionalParams){
-        sendConsoleLog(message);
+        console.defaultLog.apply(console, message, optionalParams);
+        sendConsoleLog(message, optionalParams);
     }
 </script>
 
