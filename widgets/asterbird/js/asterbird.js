@@ -13,6 +13,9 @@ vis.binds.asterbird = {
 		vis.binds.asterbird.adapterInstance = adapterInstance;
 
 		console.log("ASTERBIRD ","Passed init method");
+
+		document.getElementById("acceptCallBtn").disabled = true;
+		document.getElementById("endCallBtn").disabled = true;
 	},
 	initSIP: function(audioElement) {
 		if(!vis.editMode) {
@@ -66,6 +69,8 @@ vis.binds.asterbird = {
 		console.log("ASTERBIRD ","call incoming");
         vis.binds.asterbird.isCallIncoming = true;
 		vis.binds.asterbird.widgetElement.style.visibility = "visible";
+		document.getElementById("acceptCallBtn").disabled = false;
+		document.getElementById("endCallBtn").disabled = true;
 
 		var videoElement = document.getElementById("videoElement");
 		vis.binds.asterbird.intervall = setInterval(()=> {
@@ -78,6 +83,8 @@ vis.binds.asterbird = {
 		console.log("ASTERBIRD ","call terminated");
 
 		vis.binds.asterbird.widgetElement.style.visibility = "hidden";
+		document.getElementById("acceptCallBtn").disabled = true;
+		document.getElementById("endCallBtn").disabled = true;
 
 		if(vis.binds.asterbird.intervall) {
 			clearInterval(vis.binds.asterbird.intervall);
@@ -92,6 +99,8 @@ vis.binds.asterbird = {
 	acceptCall: function() {
 		console.log("ASTERBIRD ","accept call");
 		sipCommunication.acceptCall();
+		document.getElementById("acceptCallBtn").disabled = true;
+		document.getElementById("endCallBtn").disabled = false;
         vis.binds.asterbird.isInCall = true;
         vis.binds.asterbird.isCallIncoming = false;
 		console.log("ASTERBIRD ","show video stream");
@@ -111,7 +120,8 @@ vis.binds.asterbird = {
         if(vis.binds.asterbird.isCallIncoming)
 		    sipCommunication.rejectCall();
 
-
+		document.getElementById("acceptCallBtn").disabled = true;
+		document.getElementById("endCallBtn").disabled = true;
 	},
 	openDoor: function() {
 		console.log("open door");
