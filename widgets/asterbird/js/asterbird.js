@@ -128,6 +128,8 @@ vis.binds.asterbird = {
 	requestAsteriskAccountData: function (realm, websocket_proxy_url, audioElement) {
 		console.log("Open dialog for asterisk account data.")
 		const accountDataDialog = document.getElementById("accountDataDialog");
+		dialogPolyfill.registerDialog(accountDataDialog);
+
         var cancelButton = document.getElementById('cancel');
         var confirmButton = document.getElementById('confirm');
 
