@@ -16,11 +16,15 @@ vis.binds.asterbird = {
 	},
 	initSIP: function(audioElement) {
 		if(!vis.editMode) {
-			vis.conn.getStates(null, (error, data) => {
+			var dps= ['asterbird.0.videoSource','asterbird.0.imageSource','asterbird.0.openDoorRequested','asterbird.0.config'];
+			vis.conn.getStates(dps, (error, data) => {
 				console.log("ASTERBIRD ","Start initSIP method");
 				vis.updateStates(data);
 
 				audioElement.volume = 0.5;
+
+				if(!sipCommunication) {
+
 					const astersikConfJSON = vis.states[vis.binds.asterbird.adapterInstance + ".config.val"];
 					const astersikConf = JSON.parse(astersikConfJSON);
 
@@ -33,18 +37,17 @@ vis.binds.asterbird = {
 
 
 					if (sipCommunicationAccount.IsCorrectInitialized()) {
-						if(!sipCommunication) {
 							console.log("ASTERBIRD ","Create new SIP comm.");
 							sipCommunication = new SIPCommunication(realm, sipCommunicationAccount, websocket_proxy_url, audioElement);
 							sipCommunication.onCallIncoming = vis.binds.asterbird.onCallIncoming;
 							sipCommunication.onCallTerminated = vis.binds.asterbird.onCallTerminated;
-						} else {
-							console.log("ASTERBIRD ","Sip comm already there.");
-						}
 					} else {
 						vis.binds.asterbird.requestAsteriskAccountData(realm, websocket_proxy_url, audioElement);
 					}
 
+				} else {
+					console.log("ASTERBIRD ","Sip comm already there.");
+				}
 
 				console.log("ASTERBIRD ","Passed initSIP method");
 			});
