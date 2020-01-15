@@ -2,6 +2,41 @@
 <link rel="stylesheet" href="widgets/asterbird/css/style.css"/>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+<script>
+    const logBox = [];
+    function sendConsoleLog(message) {
+        logBox.push(message);
+
+        try {
+            const logBoxElment = document.getElementById('logBox');
+
+            if (logBoxElment) {
+                let outputLogString = 'CONSOLE LOG:';
+
+                logBox.forEach(element => {
+                    outputLogString = outputLogString + '\n' + element;
+                });
+
+                logBoxElment.value = outputLogString;
+            }
+        }catch (e){
+            alert('LOG BOX ERROR.');
+        }
+    }
+
+    console.log = function(message, optionalParams){
+        sendConsoleLog(message);
+    }
+
+    console.info = function(message, optionalParams){
+        sendConsoleLog(message);
+    }
+
+    console.error = function(message, optionalParams){
+        sendConsoleLog(message);
+    }
+</script>
+
 <script type="text/javascript" src="widgets/asterbird/js/dialog-polyfill.js"></script>
 <script type="text/javascript" src="widgets/asterbird/js/SIPml-api.js"></script>
 <script type="text/javascript" src="widgets/asterbird/js/SIPCommunicationAccount.js"></script>
@@ -46,6 +81,9 @@
                 </div>
             </div>
 		    </div>
+		    <textarea style="position: absolute; top: 0px; left: 0px; width: 300px;" id="logBox">
+
+		    </textarea>
 	</div>
 	<dialog id="accountDataDialog">
       <form method="dialog">
