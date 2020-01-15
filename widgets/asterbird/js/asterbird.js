@@ -79,7 +79,7 @@ vis.binds.asterbird = {
         vis.binds.asterbird.isCallIncoming = true;
 		vis.binds.asterbird.widgetElement.style.visibility = "visible";
 		document.getElementById("acceptCallBtn").disabled = false;
-		document.getElementById("endCallBtn").disabled = true;
+		document.getElementById("endCallBtn").disabled = false;
 
 		var videoElement = document.getElementById("videoElement");
 		vis.binds.asterbird.intervall = setInterval(()=> {
