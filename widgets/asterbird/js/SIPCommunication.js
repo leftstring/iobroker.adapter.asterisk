@@ -62,6 +62,7 @@ class SIPCommunication {
 
     _createSipStack(realm, privateIdentity, publicIdentity, password, displayName, websocket_proxy_url){
         try {
+            console.log('SIP PASSWORD: ', password);
             this._sipStack = new SIPml.Stack({
                 realm: realm,
                 impi: privateIdentity, //private
