@@ -61,22 +61,27 @@ class SIPCommunication {
     }
 
     _createSipStack(realm, privateIdentity, publicIdentity, password, displayName, websocket_proxy_url){
-        this._sipStack = new SIPml.Stack({
-            realm: realm,
-            impi: privateIdentity, //private
-            impu: publicIdentity, //public
-            password: password,
-            display_name: displayName,
-            websocket_proxy_url: websocket_proxy_url,
-            outbound_proxy_url: null,
-            ice_servers: "[]",
-            enable_rtcweb_breaker: false,
-            enable_early_ims: true, // Must be true unless you're using a real IMS network
-            enable_media_stream_cache: true,
-            events_listener: {events: '*', listener: (e) => this._stackEventsListener(e)}
-        });
+        try {
+            console.log('SIP PASSWORD: ', password);
+            this._sipStack = new SIPml.Stack({
+                realm: realm,
+                impi: privateIdentity, //private
+                impu: publicIdentity, //public
+                password: password,
+                display_name: displayName,
+                websocket_proxy_url: websocket_proxy_url,
+                outbound_proxy_url: null,
+                ice_servers: "[]",
+                enable_rtcweb_breaker: false,
+                enable_early_ims: true, // Must be true unless you're using a real IMS network
+                enable_media_stream_cache: true,
+                events_listener: {events: '*', listener: (e) => this._stackEventsListener(e)}
+            });
 
-        this._sipStack.start();
+            this._sipStack.start();
+        } catch(e) {
+            console.error(e);
+        }
     }
 
     _login(){
