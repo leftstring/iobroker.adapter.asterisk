@@ -72,3 +72,14 @@
 	box-shadow: -100vw 0 0 100vw dodgerblue;
 	border: none;
 }
+
+#accountDataDialog {
+	margin: 0px;
+    width: 340px;
+    top: 32px;
+    left: calc(50vw - 150px);
+}
+
+#accountDataDialog input {
+	margin-bottom: 8px;
+}
