@@ -101,7 +101,77 @@ if (navigator.mozGetUserMedia) {
         b.play()
     }
 } else {
-    if (navigator.webkitGetUserMedia) {
+     if (navigator.mediaDevices.getUserMedia) {
+        console.log("This appears to be a modern browser");
+        webrtcDetectedBrowser = "chrome";
+        var result = navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
+        if (result !== null) {
+            webrtcDetectedVersion = parseInt(result[2], 10)
+        } else {
+            webrtcDetectedVersion = 999
+        }
+        createIceServer = function (b, e, a) {
+            var c = null;
+            var d = b.split(":");
+            if (d[0].indexOf("stun") === 0) {
+                c = {url: b}
+            } else {
+                if (d[0].indexOf("turn") === 0) {
+                    c = {url: b, credential: a, username: e}
+                }
+            }
+            return c
+        };
+        createIceServers = function (c, e, a) {
+            var d = [];
+            if (webrtcDetectedVersion >= 34) {
+                d = {urls: c, credential: a, username: e}
+            } else {
+                for (i = 0; i < c.length; i++) {
+                    var b = createIceServer(c[i], e, a);
+                    if (b !== null) {
+                        d.push(b)
+                    }
+                }
+            }
+            return d
+        };
+        var RTCPeerConnection = function (a, b) {
+            if (webrtcDetectedVersion < 34) {
+                maybeFixConfiguration(a)
+            }
+            return new webkitRTCPeerConnection(a, b)
+        };
+        getUserMedia = navigator.mediaDevices.getUserMedia.bind(navigator);
+        navigator.getUserMedia = getUserMedia;
+        attachMediaStream = function (a, b) {
+            if (typeof a.srcObject !== "undefined") {
+                a.srcObject = b
+            } else {
+                if (typeof a.mozSrcObject !== "undefined") {
+                    a.mozSrcObject = b
+                } else {
+                    if (typeof a.src !== "undefined") {
+                        if (b) {
+                            a.src = URL.createObjectURL(b)
+                        } else {
+                            if (a.src && typeof URL.revokeObjectURL !== "undefined") {
+                                URL.revokeObjectURL(a.src);
+                                a.src = null
+                            }
+                        }
+                    } else {
+                        console.log("Error attaching stream to element.")
+                    }
+                }
+            }
+            return a
+        };
+        reattachMediaStream = function (b, a) {
+            b.src = a.src
+        }
+    }
+    else if (navigator.webkitGetUserMedia) {
         console.log("This appears to be Chrome");
         webrtcDetectedBrowser = "chrome";
         var result = navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
