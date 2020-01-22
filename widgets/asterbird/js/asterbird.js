@@ -58,7 +58,7 @@ vis.binds.asterbird = {
 	},
 	initWidgetElement: function(widgetElement) {
 		if(!vis.editMode){
-			// widgetElement.style.visibility = "hidden";
+			widgetElement.style.visibility = "hidden";
 
 			vis.binds.asterbird.widgetElement = widgetElement;
 		}
